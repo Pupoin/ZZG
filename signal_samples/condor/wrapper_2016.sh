@@ -1,10 +1,10 @@
-
+#! /bin/bash
 # set up cmssw
 export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
 source $VO_CMS_SW_DIR/cmsset_default.sh
-export Proxy_path=/afs/cern.ch/user/s/sdeng/.krb5/x509up_u109738
-voms-proxy-info -all
-voms-proxy-info -all -file $Proxy_path
+# export Proxy_path=/afs/cern.ch/user/s/sdeng/.krb5/x509up_u109738
+# voms-proxy-info -all
+# voms-proxy-info -all -file $Proxy_path
 
 
 # LHEGen
@@ -22,6 +22,7 @@ sed -i "s|/cvmfs/cms.cern.ch/.*tar.xz|/cvmfs/cms.cern.ch/phys_generator/gridpack
 scram b
 cd ../..
 
+EVENTS=100
 cmsDriver.py Configuration/GenProduction/python/SMP-RunIISummer20UL16wmLHEGEN-00004-fragment.py \
     --python_filename SMP-RunIISummer20UL16wmLHEGEN-00004_1_cfg.py --eventcontent RAWSIM,LHE \
     --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN,LHE \
@@ -130,11 +131,12 @@ cd CMSSW_10_6_17_patch1/src
 eval `scram runtime -sh`
 scram b
 cd ../..
+# --filein "dbs:/WZJJ_EWK_TLPolarization_TuneCP5_13TeV_madgraph-madspin-pythia8/RunIISummer20UL16RECO-106X_mcRun2_asymptotic_v13-v2/AODSIM" \
 cmsDriver.py  --python_filename SMP-RunIISummer20UL16MiniAOD-00021_1_cfg.py \
     --eventcontent MINIAODSIM --customise Configuration/DataProcessing/Utils.addMonitoring \
     --datatier MINIAODSIM --fileout file:SMP-RunIISummer20UL16MiniAOD-00021.root \
     --conditions 106X_mcRun2_asymptotic_v13 --step PAT --geometry DB:Extended \
-    --filein SMP-RunIISummer20UL16RECO-00021.root \
+    --filein file:SMP-RunIISummer20UL16RECO-00021.root \
     --era Run2_2016 --runUnscheduled --no_exec --mc -n $EVENTS 
 cmsRun SMP-RunIISummer20UL16MiniAOD-00021_1_cfg.py 
 
@@ -151,10 +153,10 @@ eval `scram runtime -sh`
 scram b
 cd ../..
 cmsDriver.py  --python_filename SMP-RunIISummer20UL16NanoAODv2-00047_1_cfg.py \
-    --eventcontent NANOEDMAODSIM --customise Configuration/DataProcessing/Utils.addMonitoring \
+    --eventcontent NANOAODSIM --customise Configuration/DataProcessing/Utils.addMonitoring \
     --datatier NANOAODSIM --fileout file:SMP-RunIISummer20UL16NanoAODv2-00047.root \
     --conditions 106X_mcRun2_asymptotic_v15 --step NANO \
-    --filein SMP-RunIISummer20UL16MiniAOD-00021.root \
+    --filein file:SMP-RunIISummer20UL16MiniAOD-00021.root \
     --era Run2_2016,run2_nanoAOD_106Xv1 --no_exec --mc -n $EVENTS 
 cmsRun SMP-RunIISummer20UL16NanoAODv2-00047_1_cfg.py 
 
