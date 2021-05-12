@@ -23,12 +23,14 @@ scram b
 cd ../..
 
 EVENTS=100
+SEED=$(($(date +%s) % 100 + 1)) && echo $SEED
 cmsDriver.py Configuration/GenProduction/python/SMP-RunIISummer20UL16wmLHEGEN-00004-fragment.py \
     --python_filename SMP-RunIISummer20UL16wmLHEGEN-00004_1_cfg.py --eventcontent RAWSIM,LHE \
     --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN,LHE \
     --fileout file:SMP-RunIISummer20UL16wmLHEGEN-00004.root --conditions 106X_mcRun2_asymptotic_v13 \
     --beamspot Realistic25ns13TeV2016Collision \
-    --customise_commands process.source.numberEventsInLuminosityBlock="cms.untracked.uint32(100)" \
+    --customise_commands process.source.numberEventsInLuminosityBlock="cms.untracked.uint32(100)"  \
+    --customise_commands process.RandomNumberGeneratorService.externalLHEProducer.initialSeed="int(${SEED})" \
     --step LHE,GEN --geometry DB:Extended --era Run2_2016 --no_exec --mc -n $EVENTS
 cmsRun  SMP-RunIISummer20UL16wmLHEGEN-00004_1_cfg.py 
 

@@ -1,0 +1,8 @@
+{
+    "python.pythonPath": "/Users/zhaoyangyuan/anaconda3/envs/root6py2/bin/python",
+    "files.associations": {
+        "*.dat": "shellscript",
+        "*.dec": "shellscript",
+        "TMVAMulticlassApplication.C": "cpp"
+    }
+}
