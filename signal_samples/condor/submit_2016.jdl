@@ -2,17 +2,18 @@ universe = vanilla
 executable = wrapper_2016.sh
 requirements = (OpSysAndVer =?= "CentOS7")
 
-Proxy_path=/afs/cern.ch/user/s/sdeng/.krb5/x509up_u109738
-use_x509userproxy  = true
+#Proxy_path=/afs/cern.ch/user/s/sdeng/.krb5/x509up_u109738
+#use_x509userproxy  = true
 +JobFlavour = "testmatch"
 
 should_transfer_files = YES
 transfer_input_files = wrapper_2016.sh
 RequestCpus = 4
-error = log/job_WZG.err_$(Cluster)-$(Process)
-output = log/job_WZG.out_$(Cluster)-$(Process)
-log = log/job_WZG.log_$(Cluster)-$(Process)
-transfer_output_remaps  = "SMP-RunIISummer20UL16NanoAODv2-00047.root = /eos/user/z/zhyuan/ZZA/zza_signalsample/ZZA_2016_$(Cluster)_$(Process).root"
+error = log/job_ZZG.err_$(Cluster)-$(Process)
+output = log/job_ZZG.out_$(Cluster)-$(Process)
+log = log/job_ZZG.log_$(Cluster)-$(Process)
+#transfer_output_remaps  = "SMP-RunIISummer20UL16NanoAODv2-00047.root = /eos/user/z/zhyuan/ZZA/zza_signalsample/ZZA_2016_$(Cluster)_$(Process).root"
+transfer_output_remaps  = "SMP-RunIISummer20UL16wmLHEGEN-00004.root = /eos/user/z/zhyuan/ZZA/zza_signalsample/ZZA_2016_$(Cluster)_$(Process).root"
 when_to_transfer_output = ON_EXIT
-queue 100 
+queue 1 
 
