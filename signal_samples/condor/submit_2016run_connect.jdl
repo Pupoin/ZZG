@@ -15,9 +15,9 @@ transfer_input_files = wrapper_2016run.sh,\
                        ./local/SMP-RunIISummer20UL16RECO-00021_1_cfg.py, \
                        ./local/SMP-RunIISummer20UL16MiniAOD-00021_1_cfg.py, \
                        ./local/SMP-RunIISummer20UL16NanoAODv2-00047_1_cfg.py,\
-                       ./sandbox-CMSSW_8_0_33_UL-43f25c9.tar.gz, \
-                       ./sandbox-CMSSW_10_6_17_patch1-f71bc09.tar.gz, \
-                       ./sandbox-CMSSW_10_6_19_patch2-66a0ccf.tar.gz, \
+		       sandbox-CMSSW_8_0_33_UL-43f25c9.tar.gz, \
+			sandbox-CMSSW_10_6_17_patch1-f71bc09.tar.gz, \
+			sandbox-CMSSW_10_6_19_patch2-66a0ccf.tar.gz, \
                        ./mygz-cmssw_setup.sh
 
 
