@@ -1,5 +1,5 @@
 universe = vanilla
-executable = wrapper_2016.sh
+executable = wrapper_2016run.sh
 requirements = (OpSysAndVer =?= "CentOS7")
 
 #Proxy_path=/afs/cern.ch/user/s/sdeng/.krb5/x509up_u109738
