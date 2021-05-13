@@ -22,29 +22,29 @@ cmssw_setup sandbox-CMSSW_10_6_17_patch1-f71bc09.tar.gz
 cmsRun SMP-RunIISummer20UL16SIM-00021_1_cfg.py 
 
 
-## digipremix
-#echo "____ start premix ____"
-#cmssw_setup sandbox-CMSSW_10_6_17_patch1-f71bc09.tar.gz
-#cmsRun SMP-RunIISummer20UL16DIGIPremix-00018_1_cfg.py 
-#
-## HLT
-#echo "____ start HLT ____"
-#cmssw_setup sandbox-CMSSW_8_0_33_UL-43f25c9.tar.gz
-#cmsRun SMP-RunIISummer20UL16HLT-00021_1_cfg.py 
-#
-#
-## reco
-#echo "____ start reco ____"
-#cmssw_setup sandbox-CMSSW_10_6_17_patch1-f71bc09.tar.gz
-#cmsRun SMP-RunIISummer20UL16RECO-00021_1_cfg.py 
-#
-## miniAod
-#echo "____ start miniAod ____"
-#cmssw_setup sandbox-CMSSW_10_6_17_patch1-f71bc09.tar.gz
-#cmsRun SMP-RunIISummer20UL16MiniAOD-00021_1_cfg.py 
-#
-## NanoAod
-#echo "____ start NanoAod ____"
-#cmssw_setup sandbox-CMSSW_10_6_19_patch2-66a0ccf.tar.gz
-#cmsRun SMP-RunIISummer20UL16NanoAODv2-00047_1_cfg.py 
-#
+# digipremix
+echo "____ start premix ____"
+cmssw_setup sandbox-CMSSW_10_6_17_patch1-f71bc09.tar.gz
+cmsRun SMP-RunIISummer20UL16DIGIPremix-00018_1_cfg.py 
+
+# HLT
+echo "____ start HLT ____"
+cmssw_setup sandbox-CMSSW_8_0_33_UL-43f25c9.tar.gz
+cmsRun SMP-RunIISummer20UL16HLT-00021_1_cfg.py 
+
+
+# reco
+echo "____ start reco ____"
+cmssw_setup sandbox-CMSSW_10_6_17_patch1-f71bc09.tar.gz
+cmsRun SMP-RunIISummer20UL16RECO-00021_1_cfg.py 
+
+# miniAod
+echo "____ start miniAod ____"
+cmssw_setup sandbox-CMSSW_10_6_17_patch1-f71bc09.tar.gz
+cmsRun SMP-RunIISummer20UL16MiniAOD-00021_1_cfg.py 
+
+# NanoAod
+echo "____ start NanoAod ____"
+cmssw_setup sandbox-CMSSW_10_6_19_patch2-66a0ccf.tar.gz
+cmsRun SMP-RunIISummer20UL16NanoAODv2-00047_1_cfg.py 
+
