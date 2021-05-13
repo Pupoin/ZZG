@@ -1,5 +1,5 @@
 universe = vanilla
-executable = wrapper_2016_connect.sh
+executable = wrapper_2016.sh
 requirements = (OpSysAndVer =?= "CentOS7")
 
 #Proxy_path=/afs/cern.ch/user/s/sdeng/.krb5/x509up_u109738
@@ -8,13 +8,13 @@ requirements = (OpSysAndVer =?= "CentOS7")
 
 should_transfer_files = YES
 transfer_input_files = wrapper_2016run.sh,\
-                       ./local/SMP-RunIISummer20UL16wmLHEGEN-00004_1_cfg.py,\
-                       ./local/SMP-RunIISummer20UL16SIM-00021_1_cfg.py, \
-                       ./local/SMP-RunIISummer20UL16DIGIPremix-00018_1_cfg.py, \
-                       ./local/SMP-RunIISummer20UL16HLT-00021_1_cfg.py, \
-                       ./local/SMP-RunIISummer20UL16RECO-00021_1_cfg.py, \
-                       ./local/SMP-RunIISummer20UL16MiniAOD-00021_1_cfg.py, \
-                       ./local/SMP-RunIISummer20UL16NanoAODv2-00047_1_cfg.py,\
+                       ../cfg_2016/SMP-RunIISummer20UL16wmLHEGEN-00004_1_cfg.py,\
+                       ../cfg_2016/SMP-RunIISummer20UL16SIM-00021_1_cfg.py, \
+                       ../cfg_2016/SMP-RunIISummer20UL16DIGIPremix-00018_1_cfg.py, \
+                       ../cfg_2016/SMP-RunIISummer20UL16HLT-00021_1_cfg.py, \
+                       ../cfg_2016/SMP-RunIISummer20UL16RECO-00021_1_cfg.py, \
+                       ../cfg_2016/SMP-RunIISummer20UL16MiniAOD-00021_1_cfg.py, \
+                       ../cfg_2016/SMP-RunIISummer20UL16NanoAODv2-00047_1_cfg.py,\
 
 
 
