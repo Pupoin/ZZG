@@ -1,3 +1,7 @@
 /tmp
 /root
-
+tmp/
+root/
+*root
+cmssw-tmp/
+*log
