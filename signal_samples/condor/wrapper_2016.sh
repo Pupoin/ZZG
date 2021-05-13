@@ -22,7 +22,7 @@ sed -i "s|/cvmfs/cms.cern.ch/.*tar.xz|/cvmfs/cms.cern.ch/phys_generator/gridpack
 scram b
 cd ../..
 
-EVENTS=100
+EVENTS=50
 SEED=$(($(date +%s) % 100 + 1)) && echo $SEED
 cmsDriver.py Configuration/GenProduction/python/SMP-RunIISummer20UL16wmLHEGEN-00004-fragment.py \
     --python_filename SMP-RunIISummer20UL16wmLHEGEN-00004_1_cfg.py --eventcontent RAWSIM,LHE \

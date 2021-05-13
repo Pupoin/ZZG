@@ -13,6 +13,7 @@ error = log/ZZG_2016.err_$(Cluster)-$(Process)
 output = log/ZZG_2016.out_$(Cluster)-$(Process)
 log = log/ZZG_2016.log_$(Cluster)-$(Process)
 transfer_output_remaps  = "SMP-RunIISummer20UL16NanoAODv2-00047.root = /eos/user/z/zhyuan/ZZA/zza_signalsample/ZZG_2016_$(Cluster)_$(Process).root"
+transfer_output_remaps  = "SMP-RunIISummer20UL16MiniAOD-00021.root = /eos/user/z/zhyuan/ZZA/zza_signalsample/ZZG_minAod2016_$(Cluster)_$(Process).root"
 when_to_transfer_output = ON_EXIT
-queue 100 
+queue 1
 
