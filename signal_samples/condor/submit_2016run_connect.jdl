@@ -1,5 +1,5 @@
 universe = vanilla
-executable = wrapper_2016_connect.sh
+executable = wrapper_2016run_connect.sh
 requirements = (OpSysAndVer =?= "CentOS7")
 
 #Proxy_path=/afs/cern.ch/user/s/sdeng/.krb5/x509up_u109738
@@ -7,7 +7,7 @@ requirements = (OpSysAndVer =?= "CentOS7")
 +JobFlavour = "testmatch"
 
 should_transfer_files = YES
-transfer_input_files = wrapper_2016run.sh,\
+transfer_input_files = wrapper_2016run_connect.sh,\
                        ./local/SMP-RunIISummer20UL16wmLHEGEN-00004_1_cfg.py,\
                        ./local/SMP-RunIISummer20UL16SIM-00021_1_cfg.py, \
                        ./local/SMP-RunIISummer20UL16DIGIPremix-00018_1_cfg.py, \
@@ -15,9 +15,9 @@ transfer_input_files = wrapper_2016run.sh,\
                        ./local/SMP-RunIISummer20UL16RECO-00021_1_cfg.py, \
                        ./local/SMP-RunIISummer20UL16MiniAOD-00021_1_cfg.py, \
                        ./local/SMP-RunIISummer20UL16NanoAODv2-00047_1_cfg.py,\
-		       sandbox-CMSSW_8_0_33_UL-43f25c9.tar.gz, \
-			sandbox-CMSSW_10_6_17_patch1-f71bc09.tar.gz, \
-			sandbox-CMSSW_10_6_19_patch2-66a0ccf.tar.gz, \
+		               sandbox-CMSSW_8_0_33_UL-43f25c9.tar.gz, \
+			           sandbox-CMSSW_10_6_17_patch1-f71bc09.tar.gz, \
+			           sandbox-CMSSW_10_6_19_patch2-66a0ccf.tar.gz, \
                        ./mygz-cmssw_setup.sh
 
 
@@ -28,5 +28,5 @@ output = log/ZZG_2016.out_$(Cluster)-$(Process)
 log = log/ZZG_2016.log_$(Cluster)-$(Process)
 transfer_output_remaps  = "SMP-RunIISummer20UL16NanoAODv2-00047.root = /eos/user/z/zhyuan/ZZA/zza_signalsample/ZZG2016nanoAOD_$(Cluster)_$(Process).root, SMP-RunIISummer20UL16MiniAOD-00021.root = /eos/user/z/zhyuan/ZZA/zza_signalsample/ZZG2016miniAOD_$(Cluster)_$(Process).root"
 when_to_transfer_output = ON_EXIT
-queue 1
+queue 2 
 
