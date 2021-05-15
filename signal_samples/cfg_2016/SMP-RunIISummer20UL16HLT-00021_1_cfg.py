@@ -2,7 +2,7 @@
 # using: 
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
-# with command line options: --python_filename SMP-RunIISummer20UL16HLT-00021_1_cfg.py --eventcontent RAWSIM --outputCommand keep *_mix_*_*,keep *_genPUProtons_*_* --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM-RAW --inputCommands keep *,drop *_*_BMTF_*,drop *PixelFEDChannel*_*_*_* --fileout file:SMP-RunIISummer20UL16HLT-00021.root --conditions 80X_mcRun2_asymptotic_2016_TrancheIV_v6 --customise_commands process.source.bypassVersionCheck = cms.untracked.bool(True) --step HLT:25ns15e33_v4 --geometry DB:Extended --filein file:SMP-RunIISummer20UL16DIGIPremix-00018.root --era Run2_2016 --no_exec --mc -n 50
+# with command line options: --python_filename SMP-RunIISummer20UL16HLT-00021_1_cfg.py --eventcontent RAWSIM --outputCommand keep *_mix_*_*,keep *_genPUProtons_*_* --customise Configuration/DataProcessing/Utils.addMonitoring --datatier GEN-SIM-RAW --inputCommands keep *,drop *_*_BMTF_*,drop *PixelFEDChannel*_*_*_* --fileout file:SMP-RunIISummer20UL16HLT-00021.root --conditions 80X_mcRun2_asymptotic_2016_TrancheIV_v6 --customise_commands process.source.bypassVersionCheck = cms.untracked.bool(True) --step HLT:25ns15e33_v4 --geometry DB:Extended --filein file:SMP-RunIISummer20UL16DIGIPremix-00018.root --era Run2_2016 --no_exec --mc -n 1000
 import FWCore.ParameterSet.Config as cms
 
 from Configuration.StandardSequences.Eras import eras
@@ -22,7 +22,7 @@ process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(50)
+    input = cms.untracked.int32(1000)
 )
 
 # Input source
@@ -41,7 +41,7 @@ process.options = cms.untracked.PSet(
 
 # Production Info
 process.configurationMetadata = cms.untracked.PSet(
-    annotation = cms.untracked.string('--python_filename nevts:50'),
+    annotation = cms.untracked.string('--python_filename nevts:1000'),
     name = cms.untracked.string('Applications'),
     version = cms.untracked.string('$Revision: 1.19 $')
 )
