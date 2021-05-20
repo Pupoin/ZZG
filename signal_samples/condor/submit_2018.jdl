@@ -1,0 +1,35 @@
+universe = vanilla
+executable = wrapper_2018.sh
+#requirements = (OpSysAndVer =?= "CentOS7")
+requirements = (OpSysAndVer =?= "SLCern7" || OpSysAndVer =?= "SL7" || OpSysAndVer =?= "RedHat7" || OpSysMajorVer == 7)
+#Proxy_path=/afs/cern.ch/user/s/sdeng/.krb5/x509up_u109738
+#use_x509userproxy  = true
+#+JobFlavour = "testmatch"
+
+should_transfer_files = YES
+transfer_input_files = wrapper_2018.sh,\
+                       ../cfg_2018/SMP-RunIISummer20UL18DIGIPremix-00002_1_cfg.py   ,\           
+                       ../cfg_2018/SMP-RunIISummer20UL18HLT-00002_1_cfg.py          ,\       
+                       ../cfg_2018/SMP-RunIISummer20UL18MiniAOD-00002_1_cfg.py      ,\              
+                       ../cfg_2018/SMP-RunIISummer20UL18NanoAODv2-00019_1_cfg.py    ,\       
+                       ../cfg_2018/SMP-RunIISummer20UL18RECO-00002_1_cfg.py         ,\        
+                       ../cfg_2018/SMP-RunIISummer20UL18SIM-00002_1_cfg.py          ,\           
+                       ../cfg_2018/SMP-RunIISummer20UL18wmLHEGEN-00002_1_cfg.py     ,\            
+                       sandbox-CMSSW_8_0_33_UL-0e2eb95.tar.gz       , \     
+                       sandbox-CMSSW_9_4_14_UL_patch1-f007dfc.tar.gz, \        
+                       sandbox-CMSSW_10_2_16_UL-bc46fcf.tar.gz      , \  
+                       sandbox-CMSSW_10_6_17_patch1-aa4ec67.tar.gz  , \      
+                       sandbox-CMSSW_10_6_18-e37c685.tar.gz         , \ 
+                       sandbox-CMSSW_10_6_19_patch2-0147398.tar.gz  , \      
+                       mygz-cmssw_setup.sh               
+
+
+RequestCpus = 4
+error = log/ZZG_2018.err_$(Cluster)-$(Process)
+output = log/ZZG_2018.out_$(Cluster)-$(Process)
+log = log/ZZG_2018.log_$(Cluster)-$(Process)
+#transfer_output_remaps  = "SMP-RunIISummer20UL16NanoAODv2-00047.root = /eos/user/z/zhyuan/ZZA/zza_signalsample/ZZG2018nanoAOD_$(Cluster)_$(Process).root, SMP-RunIISummer20UL16MiniAOD-00021.root = /eos/user/z/zhyuan/ZZA/zza_signalsample/ZZG2018miniAOD_$(Cluster)_$(Process).root"
+transfer_output_remaps  = "SMP-RunIISummer20UL18NanoAODv2-00019.root = root/ZZG2018nanoAOD_$(Cluster)_$(Process).root; SMP-RunIISummer20UL18MiniAOD-00002.root = root/ZZG2018miniAOD_$(Cluster)_$(Process).root"
+when_to_transfer_output = ON_EXIT
+queue 800 
+

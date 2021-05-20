@@ -1,0 +1,35 @@
+universe = vanilla
+executable = wrapper_2016apv.sh
+#requirements = (OpSysAndVer =?= "CentOS7")
+requirements = (OpSysAndVer =?= "SLCern7" || OpSysAndVer =?= "SL7" || OpSysAndVer =?= "RedHat7" || OpSysMajorVer == 7)
+#Proxy_path=/afs/cern.ch/user/s/sdeng/.krb5/x509up_u109738
+#use_x509userproxy  = true
+#+JobFlavour = "testmatch"
+
+should_transfer_files = YES
+transfer_input_files = wrapper_2016apv.sh,\
+                       ../cfg_2016apv/SMP-RunIISummer20UL16DIGIPremixAPV-00007_1_cfg.py ,\           
+                       ../cfg_2016apv/SMP-RunIISummer20UL16HLTAPV-00014_1_cfg.py        ,\       
+                       ../cfg_2016apv/SMP-RunIISummer20UL16MiniAODAPV-00014_1_cfg.py    ,\              
+                       ../cfg_2016apv/SMP-RunIISummer20UL16NanoAODAPVv2-00034_1_cfg.py  ,\       
+                       ../cfg_2016apv/SMP-RunIISummer20UL16RECOAPV-00014_1_cfg.py       ,\        
+                       ../cfg_2016apv/SMP-RunIISummer20UL16SIMAPV-00014_1_cfg.py        ,\           
+                       ../cfg_2016apv/SMP-RunIISummer20UL16wmLHEGENAPV-00004_1_cfg.py   ,\            
+                       sandbox-CMSSW_8_0_33_UL-0e2eb95.tar.gz       , \     
+                       sandbox-CMSSW_9_4_14_UL_patch1-f007dfc.tar.gz, \        
+                       sandbox-CMSSW_10_2_16_UL-bc46fcf.tar.gz      , \  
+                       sandbox-CMSSW_10_6_17_patch1-aa4ec67.tar.gz  , \      
+                       sandbox-CMSSW_10_6_18-e37c685.tar.gz         , \ 
+                       sandbox-CMSSW_10_6_19_patch2-0147398.tar.gz  , \      
+                       mygz-cmssw_setup.sh
+
+
+RequestCpus = 4
+error = log/ZZG_2016apv.err_$(Cluster)-$(Process)
+output = log/ZZG_2016apv.out_$(Cluster)-$(Process)
+log = log/ZZG_2016apv.log_$(Cluster)-$(Process)
+#transfer_output_remaps  = "SMP-RunIISummer20UL16NanoAODv2-00047.root = /eos/user/z/zhyuan/ZZA/zza_signalsample/ZZG2016apvnanoAOD_$(Cluster)_$(Process).root, SMP-RunIISummer20UL16MiniAOD-00021.root = /eos/user/z/zhyuan/ZZA/zza_signalsample/ZZG2016apvminiAOD_$(Cluster)_$(Process).root"
+transfer_output_remaps  = "SMP-RunIISummer20UL16NanoAODAPVv2-00034.root = root/ZZG2016apvnanoAOD_$(Cluster)_$(Process).root; SMP-RunIISummer20UL16MiniAODAPV-00014.root = root/ZZG2016apvminiAOD_$(Cluster)_$(Process).root"
+when_to_transfer_output = ON_EXIT
+queue 800 
+

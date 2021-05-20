@@ -101,7 +101,7 @@ cd CMSSW_10_6_17_patch1/src
 eval `scram runtime -sh`
 scram b
 cd ../..
-cmsDriver.py  --python_filename SMP-RunIISummer20UL16MiniAODAPV-00014_1_cfg.py --eventcontent MINIAODSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier MINIAODSIM --fileout file:SMP-RunIISummer20UL16MiniAODAPV-00014.root --conditions 106X_mcRun2_asymptotic_preVFP_v8 --step PAT --geometry DB:Extended --filein "dbs:/VBS_SSWW_cHW_BSM_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16RECOAPV-106X_mcRun2_asymptotic_preVFP_v8-v2/AODSIM" --era Run2_2016_HIPM --runUnscheduled --no_exec --mc -n $EVENTS || exit $? ;
+cmsDriver.py  --python_filename SMP-RunIISummer20UL16MiniAODAPV-00014_1_cfg.py --eventcontent MINIAODSIM --customise Configuration/DataProcessing/Utils.addMonitoring --datatier MINIAODSIM --fileout file:SMP-RunIISummer20UL16MiniAODAPV-00014.root --conditions 106X_mcRun2_asymptotic_preVFP_v8 --step PAT --geometry DB:Extended --filein file:SMP-RunIISummer20UL16RECOAPV-00014.root --era Run2_2016_HIPM --runUnscheduled --no_exec --mc -n $EVENTS || exit $? ;
 #cmsRun  SMP-RunIISummer20UL16MiniAODAPV-00014_1_cfg.py
 
 # NanoAod
@@ -119,7 +119,7 @@ cmsDriver.py  --python_filename SMP-RunIISummer20UL16NanoAODAPVv2-00034_1_cfg.py
     --eventcontent NANOAODSIM --customise Configuration/DataProcessing/Utils.addMonitoring \
     --datatier NANOAODSIM --fileout file:SMP-RunIISummer20UL16NanoAODAPVv2-00034.root \
     --conditions 106X_mcRun2_asymptotic_preVFP_v9 --step NANO \
-    --filein "dbs:/VBS_SSWW_cHW_BSM_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16MiniAODAPV-106X_mcRun2_asymptotic_preVFP_v8-v2/MINIAODSIM" \
+    --filein file:SMP-RunIISummer20UL16MiniAODAPV-00014.root \
     --era Run2_2016,run2_nanoAOD_106Xv1 --no_exec --mc -n $EVENTS || exit $? ;
 #cmsRun  SMP-RunIISummer20UL16NanoAODAPVv2-00034_1_cfg.py
 
