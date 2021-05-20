@@ -18,7 +18,7 @@ fi
 cd CMSSW_10_6_17_patch1/src
 eval `scram runtime -sh`
 curl -s -k https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get_fragment/SMP-RunIISummer20UL16wmLHEGEN-00004 --retry 3 --create-dirs -o Configuration/GenProduction/python/SMP-RunIISummer20UL16wmLHEGEN-00004-fragment.py
-sed -i "s|/cvmfs/cms.cern.ch/.*tar.xz|/cvmfs/cms.cern.ch/phys_generator/gridpacks/slc7_amd64_gcc700/13TeV/madgraph/V5_2.6.5/ZZATo4L/ZZGTO4L_4f_NLO_slc7_amd64_gcc700_CMSSW_10_6_19_tarball.tar.xz|"  Configuration/GenProduction/python/SMP-RunIISummer20UL16wmLHEGEN-00004-fragment.py
+sed -i "s|/cvmfs/cms.cern.ch/.*tar.xz|/cvmfs/cms.cern.ch/phys_generator/gridpacks/slc7_amd64_gcc700/13TeV/madgraph/V5_2.6.5/ZZATo4L/ZZGTO4L_4f_NLO_slc7_amd64_gcc700_CMSSW_10_6_19_tarball.tar.xz|"  Configuration/GenProduction/python/SMP-RunIISummer20UL*wmLHEGEN-*-fragment.py
 scram b
 cd ../..
 
