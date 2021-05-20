@@ -16,7 +16,7 @@ if [ -r CMSSW_10_6_17_patch1/src ] ; then
   echo release CMSSW_10_6_17_patch1 already exists
 else
   scram p CMSSW CMSSW_10_6_17_patch1
-fi
+fi 
 cd CMSSW_10_6_17_patch1/src
 eval `scram runtime -sh`
 curl -s -k https://cms-pdmv.cern.ch/mcm/public/restapi/requests/get_fragment/SMP-RunIISummer20UL17wmLHEGEN-00001 --retry 3 --create-dirs -o Configuration/GenProduction/python/SMP-RunIISummer20UL17wmLHEGEN-00001-fragment.py
