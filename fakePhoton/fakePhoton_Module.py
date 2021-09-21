@@ -81,14 +81,14 @@ class ZZG_Producer(Module):
         self.out.branch("photonchiso",  "F")
         self.out.branch("photonsieie",  "F")
         self.out.branch("photon_isprompt", "I")
-        self.out.branch("photon_gen_matching", "I")
+        # self.out.branch("photon_gen_matching", "I")
         self.out.branch("photonet_f",  "F")
         self.out.branch("photoneta_f",  "F")
         self.out.branch("photonphi_f",  "F")
         self.out.branch("photonchiso_f",  "F")
         self.out.branch("photonsieie_f",  "F")
         self.out.branch("photon_isprompt_f", "I")
-        self.out.branch("photon_gen_matching_f", "I")
+        # self.out.branch("photon_gen_matching_f", "I")
         # self.out.branch("mll",  "F")
         # self.out.branch("ptll",  "F")
         # self.out.branch("mt",  "F")
@@ -185,7 +185,7 @@ class ZZG_Producer(Module):
         selected_fake_template_photons = []
 
         #selection on muons
-        muon_pass =0
+        # muon_pass =0
         sum_muonCharge = 0
         for i in range(0,len(muons)):
             if muons[i].pt < 4:
@@ -485,7 +485,7 @@ class ZZG_Producer(Module):
         self.out.fillBranch("pass_selection2",pass_selection2) # select fake photons
         
         if pass_selection1:
-            photon_gen_matching=-10
+            # photon_gen_matching=-10
             photon_isprompt =-10
         
             if hasattr(event, 'nGenPart') :
@@ -522,7 +522,7 @@ class ZZG_Producer(Module):
         self.out.fillBranch("photon_isprompt",photon_isprompt)
 
         if pass_selection2: # pass_selection1 and pass_selection1 can appear meantime
-            photon_gen_matching=-10
+            # photon_gen_matching=-10
             photon_isprompt =-10
             if hasattr(event, 'nGenPart') :
                 for j, genpart in enumerate(genparts):
@@ -546,7 +546,8 @@ class ZZG_Producer(Module):
         else:
             self.out.fillBranch("ntruepu",0)
 
-        print 'channel', channel,'mu_pass:',muon_pass,' ele_pass:',electron_pass,' photon_pass:',photon_pass,' is lepton1 real ',lepton1_isprompt,' is lepton2 real ',lepton2_isprompt,' is photon real ',photon_isprompt,' or ',photon_gen_matching
+        print 'channel', channel,'mu_pass:',len(muons_select),' ele_pass:',len(electrons_select),
+        print 'photon_pass:',len(selected_medium_or_control_photons),' is photon real ',photon_isprompt
 
         # self.out.fillBranch("njets50",njets50)
         # self.out.fillBranch("njets40",njets40)
