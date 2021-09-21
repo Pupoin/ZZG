@@ -6,3 +6,4 @@ root/
 cmssw-tmp/
 *log
 nohup.out
+*pyc
