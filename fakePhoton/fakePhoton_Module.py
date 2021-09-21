@@ -388,7 +388,6 @@ class ZZG_Producer(Module):
             self.out.fillBranch("ele1_eta",electrons[electrons_select[1]].eta)
             self.out.fillBranch("ele1_phi",electrons[electrons_select[1]].phi)
 
-        
         # 4e
         elif lepChannel == "4e":
             # if deltaR(electrons[electrons_select[0]].eta,electrons[electrons_select[0]].phi,electrons[electrons_select[1]].eta,electrons[electrons_select[1]].phi)<0.5:
@@ -514,12 +513,12 @@ class ZZG_Producer(Module):
             #pass_selection1 && (photon_selection==2 || photon_selection==3 || photon_selection==4 || photon_selection ==5 )->build fake photon enriched sample
             else:
                 assert(0)
-        self.out.fillBranch("photonet",photons[selected_medium_or_control_photons[0]].pt)
-        self.out.fillBranch("photoneta",photons[selected_medium_or_control_photons[0]].eta)
-        self.out.fillBranch("photonphi",photons[selected_medium_or_control_photons[0]].phi)
-        self.out.fillBranch("photonchiso",photons[selected_medium_or_control_photons[0]].pfRelIso03_chg*photons[selected_medium_or_control_photons[0]].pt)
-        self.out.fillBranch("photonsieie",photons[selected_medium_or_control_photons[0]].sieie)
-        self.out.fillBranch("photon_isprompt",photon_isprompt)
+            self.out.fillBranch("photonet",photons[selected_medium_or_control_photons[0]].pt)
+            self.out.fillBranch("photoneta",photons[selected_medium_or_control_photons[0]].eta)
+            self.out.fillBranch("photonphi",photons[selected_medium_or_control_photons[0]].phi)
+            self.out.fillBranch("photonchiso",photons[selected_medium_or_control_photons[0]].pfRelIso03_chg*photons[selected_medium_or_control_photons[0]].pt)
+            self.out.fillBranch("photonsieie",photons[selected_medium_or_control_photons[0]].sieie)
+            self.out.fillBranch("photon_isprompt",photon_isprompt)
 
         if pass_selection2: # pass_selection1 and pass_selection1 can appear meantime
             # photon_gen_matching=-10
@@ -529,12 +528,12 @@ class ZZG_Producer(Module):
                     if photons[selected_fake_template_photons[0]].genPartIdx >=0 and genpart.pt > 5 and abs(genpart.pdgId) == 22 and ((genparts[photons[selected_fake_template_photons[0]].genPartIdx].statusFlags & isprompt_mask == isprompt_mask) or (genparts[photons[selected_fake_template_photons[0]].genPartIdx].statusFlags & isdirectprompttaudecayproduct_mask == isdirectprompttaudecayproduct_mask) or (genparts[photons[selected_fake_template_photons[0]].genPartIdx].statusFlags & isfromhardprocess_mask == isfromhardprocess_mask)) and deltaR(photons[selected_fake_template_photons[0]].eta,photons[selected_fake_template_photons[0]].phi,genpart.eta,genpart.phi) < 0.3:
                         photon_isprompt =1
                         break
-        self.out.fillBranch("photonet_f",photons[selected_fake_template_photons[0]].pt)
-        self.out.fillBranch("photoneta_f",photons[selected_fake_template_photons[0]].eta)
-        self.out.fillBranch("photonphi_f",photons[selected_fake_template_photons[0]].phi)
-        self.out.fillBranch("photonchiso_f",photons[selected_fake_template_photons[0]].pfRelIso03_chg*photons[selected_fake_template_photons[0]].pt)
-        self.out.fillBranch("photonsieie_f",photons[selected_fake_template_photons[0]].sieie)
-        self.out.fillBranch("photon_isprompt_f",photon_isprompt)
+            self.out.fillBranch("photonet",photons[selected_fake_template_photons[0]].pt)
+            self.out.fillBranch("photoneta",photons[selected_fake_template_photons[0]].eta)
+            self.out.fillBranch("photonphi",photons[selected_fake_template_photons[0]].phi)
+            self.out.fillBranch("photonchiso",photons[selected_fake_template_photons[0]].pfRelIso03_chg*photons[selected_fake_template_photons[0]].pt)
+            self.out.fillBranch("photonsieie",photons[selected_fake_template_photons[0]].sieie)
+            self.out.fillBranch("photon_isprompt",photon_isprompt)
 
         if hasattr(event,'Pileup_nPU'):    
             self.out.fillBranch("npu",event.Pileup_nPU)
@@ -546,8 +545,8 @@ class ZZG_Producer(Module):
         else:
             self.out.fillBranch("ntruepu",0)
 
-        print 'channel', channel,'mu_pass:',len(muons_select),' ele_pass:',len(electrons_select),
-        print 'photon_pass:',len(selected_medium_or_control_photons),' is photon real ',photon_isprompt
+        print 'run', event.run, 'event', event.event, 'channel', channel,'mu_pass:',len(muons_select),' ele_pass:',len(electrons_select),
+        print 'photon_pass:',len(selected_medium_or_control_photons)
 
         # self.out.fillBranch("njets50",njets50)
         # self.out.fillBranch("njets40",njets40)

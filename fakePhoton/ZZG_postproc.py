@@ -5,9 +5,9 @@ ROOT.PyConfig.IgnoreCommandLineOptions = True
 from importlib import import_module
 from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import PostProcessor
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.countHistogramsModule import *
-# from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetHelperRun2 import createJMECorrector
-# from PhysicsTools.NanoAODTools.postprocessing.modules.common.puWeightProducer import *
-# from PhysicsTools.NanoAODTools.postprocessing.modules.common.muonScaleResProducer import *
+from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetHelperRun2 import createJMECorrector
+from PhysicsTools.NanoAODTools.postprocessing.modules.common.puWeightProducer import *
+from PhysicsTools.NanoAODTools.postprocessing.modules.common.muonScaleResProducer import *
 from fakePhoton_Module import *
 
 import argparse
@@ -64,18 +64,18 @@ else:
        if args.year=='2017':
             Modules = [countHistogramsModule(),fakePhoton_Module(),puWeight_2017(),PrefCorr_2017()]
        if args.year=='2018':
-            # Modules = [countHistogramsModule(),fakePhoton_Module(),puWeight_2018()]
-            Modules = [countHistogramsModule(),fakePhoton_Module()]
+            Modules = [countHistogramsModule(),fakePhoton_Module(),puWeight_2018()]
+            #Modules = [countHistogramsModule(),fakePhoton_Module()]
 
 p=PostProcessor(".",infilelist,
-                branchsel="PhysicsTools/ZZG/fakePhoton/input_branch.txt",
+                branchsel="input_branch.txt",
                 modules = Modules,
                 provenance=True,
                 justcount=False,
                 noOut=False,
                 fwkJobReport=fwkjobreport, 
                 jsonInput=jsoninput, 
-                outputbranchsel = "PhysicsTools/ZZG/fakePhoton/output_branch.txt")
+                outputbranchsel = "output_branch.txt")
 p.run()
 
 
