@@ -181,6 +181,7 @@ class ZZG_Producer(Module):
         dileptonp4 = ROOT.TLorentzVector()
         selected_medium_photons = []
         selected_control_photons = []
+        selected_medium_or_control_photons = []
         selected_fake_template_photons = []
 
         #selection on muons
@@ -254,6 +255,7 @@ class ZZG_Producer(Module):
             if not pass_lepton_dr_cut:
                 continue
             selected_medium_photons.append(i)  #append the medium photons passing full ID
+            selected_medium_or_control_photons.append(i)
 
         # select control photons
         for i in range(0,len(photons)):
@@ -293,6 +295,7 @@ class ZZG_Producer(Module):
             if not pass_lepton_dr_cut:
                 continue
             selected_control_photons.append(i)  # append the control photons
+            selected_medium_or_control_photons.append(i)
 
         # select fake photons
         for i in range(0,len(photons)):
