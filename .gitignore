@@ -1,9 +1,10 @@
-/tmp
-/root
-tmp/
 root/
 *root
 cmssw-tmp/
 *log
 nohup.out
 *pyc
+o
+tmp*/
+crab201*/
+__pycache__/
