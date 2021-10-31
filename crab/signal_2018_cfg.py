@@ -17,7 +17,7 @@ config.JobType.sendPythonFolder  = True
 
 config.section_("Data")
 #config.Data.outputPrimaryDataset = 'ZZG_fakePhoton'
-config.Data.userInputFiles = ['/store/user/zhyuan/zzg_signal/ZZG2018.root']
+config.Data.userInputFiles = ['root://eos/user/z/zhyuan/zzg_signal/ZZG2018.root']
 #config.Data.inputDBS = 'phys03'
 config.Data.inputDBS = 'global'
 config.Data.splitting = 'FileBased'#"LumiBased",'EventAwareLumiBased'
