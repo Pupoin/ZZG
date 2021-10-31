@@ -2,26 +2,50 @@
 #
 echo Check if TTY
 if [ "`tty`" != "not a tty" ]; then
-  echo "YOU SHOULD NOT RUN THIS IN INTERACTIVE, IT DELETES YOUR LOCAL FILES"
+    echo "YOU SHOULD NOT RUN THIS IN INTERACTIVE, IT DELETES YOUR LOCAL FILES"
 else
 
-echo "ENV..................................."
-env 
-echo "VOMS"
-voms-proxy-info -all
-echo "CMSSW BASE, python path, pwd"
-echo $CMSSW_BASE 
-echo $PYTHON_PATH
-echo $PWD 
-rm -rf $CMSSW_BASE/lib/
-rm -rf $CMSSW_BASE/src/
-rm -rf $CMSSW_BASE/module/
-rm -rf $CMSSW_BASE/python/
-mv lib $CMSSW_BASE/lib
-mv src $CMSSW_BASE/src
-mv modules $CMSSW_BASE/modules
-mv python $CMSSW_BASE/python
+    echo "ENV..................................."
+    env 
+    echo "VOMS"
+    voms-proxy-info -all
+    echo "CMSSW BASE, python path, pwd"
+    echo $CMSSW_BASE 
+    echo $PYTHON_PATH
+    echo $PWD 
+    rm -rf $CMSSW_BASE/lib/
+    rm -rf $CMSSW_BASE/src/
+    rm -rf $CMSSW_BASE/module/
+    rm -rf $CMSSW_BASE/python/
+    mv lib $CMSSW_BASE/lib
+    mv src $CMSSW_BASE/src
+    mv module $CMSSW_BASE/module
+    mv python $CMSSW_BASE/python
 
-echo Found Proxy in: $X509_USER_PROXY
-python crab_script.py -m --year 2017
+    #python ZZG_postproc.py -d -y 2018 
+    isdata=""
+    year=""
+    for i in "$@"
+    do
+        case $i in
+            kind=*)
+            isdata="${i#*=}"
+            ;;
+        esac
+        case $i in
+            year=*)
+            year="${i#*=}"
+            ;;
+        esac
+    done
+
+    echo Found Proxy in: $X509_USER_PROXY
+    if [[ "x${isdata}" == "xdata" ]]; then
+        echo "i am datadatadatadatadatadatadatadatadatadatadatadatadata"
+        python ZZG_postproc.py -d -y $year
+    else
+        echo "i am mcmcmcmcmcmcmcmcmcmcmcmcmcmcmcmcmcmcmcmcmcmcmcmcmcmcmcmcmc"
+        python ZZG_postproc.py -y $year 
+    fi
+
 fi

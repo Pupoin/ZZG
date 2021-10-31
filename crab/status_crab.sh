@@ -1,0 +1,17 @@
+crab status  crab2018/crab_DoubleMuon_Run2018A_2018
+crab status  crab2018/crab_DoubleMuon_Run2018B_2018
+crab status  crab2018/crab_DoubleMuon_Run2018C_2018
+crab status  crab2018/crab_DoubleMuon_Run2018D_2018
+crab status  crab2018/crab_EGamma_Run2018A_2018
+crab status  crab2018/crab_EGamma_Run2018B_2018
+crab status  crab2018/crab_EGamma_Run2018C_2018
+crab status  crab2018/crab_EGamma_Run2018D_2018
+crab status  crab2018/crab_MuonEG_Run2018A_2018
+crab status  crab2018/crab_MuonEG_Run2018B_2018
+crab status  crab2018/crab_MuonEG_Run2018C_2018
+crab status  crab2018/crab_MuonEG_Run2018D_2018
+crab status  crab2018/crab_SingleMuon_Run2018A_2018
+crab status  crab2018/crab_SingleMuon_Run2018B_2018
+crab status  crab2018/crab_SingleMuon_Run2018C_2018
+crab status  crab2018/crab_SingleMuon_Run2018D_2018
+crab status  crab_DoubleMuon_Run2018A_2018
