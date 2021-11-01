@@ -148,7 +148,7 @@ class ZZG_Producer(Module):
                 continue
             if muons[i].pfRelIso04_all > 0.25:
                 continue   
-            if muons[i].Muon_looseId and abs(muons[i].dxy)<0.5 and abs(muons[i].dz)<1:
+            if muons[i].looseId and abs(muons[i].dxy)<0.5 and abs(muons[i].dz)<1:
                 sum_muonCharge = sum_muonCharge + muons[i].charge
                 muons_select.append(i)
 
@@ -448,60 +448,45 @@ class ZZG_Producer(Module):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        if hasattr(event,'Pileup_nPU'):    
-            self.out.fillBranch("npu",event.Pileup_nPU)
-        else:
-            self.out.fillBranch("npu",0)
-    
-        if hasattr(event,'Pileup_nTrueInt'):    
-            self.out.fillBranch("ntruepu",event.Pileup_nTrueInt)
-        else:
-            self.out.fillBranch("ntruepu",0)
-
-
-        self.out.fillBranch("npvs",event.PV_npvs)
-        self.out.fillBranch("met",event.MET_pt)
-        self.out.fillBranch("metup",sqrt(pow(event.MET_pt*cos(event.MET_phi) + event.MET_MetUnclustEnUpDeltaX,2) + pow(event.MET_pt*sin(event.MET_phi) + event.MET_MetUnclustEnUpDeltaY,2)))
-        self.out.fillBranch("puppimet",event.PuppiMET_pt)
-        self.out.fillBranch("puppimetphi",event.PuppiMET_phi)
-        self.out.fillBranch("rawmet",event.RawMET_pt)
-        self.out.fillBranch("rawmetphi",event.RawMET_phi)
-        self.out.fillBranch("metphi",event.MET_phi)
-
-
-        self.out.fillBranch("event",event.event)
-        self.out.fillBranch("lumi",event.luminosityBlock)
-        self.out.fillBranch("run",event.run)
-        # print event.event,event.luminosityBlock,event.run
-        if hasattr(event,'Generator_weight'):
-            if event.Generator_weight > 0 :
-                n_pos=1
-                n_minus=0
+        if len(lepChannel) !=0 :
+            if hasattr(event,'Pileup_nPU'):    
+                self.out.fillBranch("npu",event.Pileup_nPU)
             else:
-                n_minus=1
-                n_pos=0
-            self.out.fillBranch("gen_weight",event.Generator_weight)
-            self.out.fillBranch("n_pos",n_pos)
-            self.out.fillBranch("n_minus",n_minus)
-        else:    
-            self.out.fillBranch("gen_weight",0)
-            self.out.fillBranch("n_pos",0)
-            self.out.fillBranch("n_minus",0)
+                self.out.fillBranch("npu",0)
+        
+            if hasattr(event,'Pileup_nTrueInt'):    
+                self.out.fillBranch("ntruepu",event.Pileup_nTrueInt)
+            else:
+                self.out.fillBranch("ntruepu",0)
+
+            self.out.fillBranch("npvs",event.PV_npvs)
+            self.out.fillBranch("met",event.MET_pt)
+            self.out.fillBranch("metup",sqrt(pow(event.MET_pt*cos(event.MET_phi) + event.MET_MetUnclustEnUpDeltaX,2) + pow(event.MET_pt*sin(event.MET_phi) + event.MET_MetUnclustEnUpDeltaY,2)))
+            self.out.fillBranch("puppimet",event.PuppiMET_pt)
+            self.out.fillBranch("puppimetphi",event.PuppiMET_phi)
+            self.out.fillBranch("rawmet",event.RawMET_pt)
+            self.out.fillBranch("rawmetphi",event.RawMET_phi)
+            self.out.fillBranch("metphi",event.MET_phi)
+
+
+            self.out.fillBranch("event",event.event)
+            self.out.fillBranch("lumi",event.luminosityBlock)
+            self.out.fillBranch("run",event.run)
+            # print event.event,event.luminosityBlock,event.run
+            if hasattr(event,'Generator_weight'):
+                if event.Generator_weight > 0 :
+                    n_pos=1
+                    n_minus=0
+                else:
+                    n_minus=1
+                    n_pos=0
+                self.out.fillBranch("gen_weight",event.Generator_weight)
+                self.out.fillBranch("n_pos",n_pos)
+                self.out.fillBranch("n_minus",n_minus)
+            else:    
+                self.out.fillBranch("gen_weight",0)
+                self.out.fillBranch("n_pos",0)
+                self.out.fillBranch("n_minus",0)
 
         return True
 
