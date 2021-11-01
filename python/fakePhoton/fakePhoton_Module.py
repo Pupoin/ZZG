@@ -48,28 +48,42 @@ class ZZG_Producer(Module):
         self.out.branch("ele0_pt", "F")
         self.out.branch("ele0_eta", "F")
         self.out.branch("ele0_phi", "F")
+        self.out.branch("ele0_m", "F")
+
         self.out.branch("ele1_pt", "F")
         self.out.branch("ele1_eta", "F")
         self.out.branch("ele1_phi", "F")
+        self.out.branch("ele1_m", "F")
+        
         self.out.branch("ele2_pt", "F")
         self.out.branch("ele2_eta", "F")
         self.out.branch("ele2_phi", "F")
+        self.out.branch("ele2_m", "F")
+
         self.out.branch("ele3_pt", "F")
         self.out.branch("ele3_eta", "F")
         self.out.branch("ele3_phi", "F")
+        self.out.branch("ele3_m", "F")
 
         self.out.branch("muon0_pt", "F")
         self.out.branch("muon0_eta", "F")
         self.out.branch("muon0_phi", "F")
+        self.out.branch("muon0_m", "F")
+
         self.out.branch("muon1_pt", "F")
         self.out.branch("muon1_eta", "F")
         self.out.branch("muon1_phi", "F")
+        self.out.branch("muon1_m", "F")
+
         self.out.branch("muon2_pt", "F")
         self.out.branch("muon2_eta", "F")
         self.out.branch("muon2_phi", "F")
+        self.out.branch("muon2_m", "F")
+
         self.out.branch("muon3_pt", "F")
         self.out.branch("muon3_eta", "F")
         self.out.branch("muon3_phi", "F")
+        self.out.branch("muon3_m", "F")
         ########################################################
 
         # self.out.branch("n_loose_mu", "I")
@@ -318,15 +332,22 @@ class ZZG_Producer(Module):
             self.out.fillBranch("muon0_pt",muons[muons_select[0]].pt)
             self.out.fillBranch("muon0_eta",muons[muons_select[0]].eta)
             self.out.fillBranch("muon0_phi",muons[muons_select[0]].phi)
+            self.out.fillBranch("muon0_m",muons[muons_select[0]].mass)
+
             self.out.fillBranch("muon1_pt",muons[muons_select[1]].pt)
             self.out.fillBranch("muon1_eta",muons[muons_select[1]].eta)
             self.out.fillBranch("muon1_phi",muons[muons_select[1]].phi)
+            self.out.fillBranch("muon1_m",muons[muons_select[1]].mass)
+
             self.out.fillBranch("ele0_pt",electrons[electrons_select[0]].pt)
             self.out.fillBranch("ele0_eta",electrons[electrons_select[0]].eta)
             self.out.fillBranch("ele0_phi",electrons[electrons_select[0]].phi)
+            self.out.fillBranch("ele0_m",electrons[electrons_select[0]].mass)
+
             self.out.fillBranch("ele1_pt",electrons[electrons_select[1]].pt)
             self.out.fillBranch("ele1_eta",electrons[electrons_select[1]].eta)
             self.out.fillBranch("ele1_phi",electrons[electrons_select[1]].phi)
+            self.out.fillBranch("ele1_m",electrons[electrons_select[1]].mass)
 
         # 4e
         elif lepChannel == "4e":
@@ -360,15 +381,22 @@ class ZZG_Producer(Module):
             self.out.fillBranch("ele0_pt", electrons[electrons_select[0]].pt)
             self.out.fillBranch("ele0_eta",electrons[electrons_select[0]].eta)
             self.out.fillBranch("ele0_phi",electrons[electrons_select[0]].phi)
+            self.out.fillBranch("ele0_m",electrons[electrons_select[0]].mass)
+
             self.out.fillBranch("ele1_pt", electrons[electrons_select[1]].pt)
             self.out.fillBranch("ele1_eta",electrons[electrons_select[1]].eta)
             self.out.fillBranch("ele1_phi",electrons[electrons_select[1]].phi)
+            self.out.fillBranch("ele1_m",electrons[electrons_select[1]].mass)
+
             self.out.fillBranch("ele2_pt", electrons[electrons_select[2]].pt)
             self.out.fillBranch("ele2_eta",electrons[electrons_select[2]].eta)
             self.out.fillBranch("ele2_phi",electrons[electrons_select[2]].phi)
+            self.out.fillBranch("ele2_m",electrons[electrons_select[2]].mass)
+
             self.out.fillBranch("ele3_pt", electrons[electrons_select[3]].pt)
             self.out.fillBranch("ele3_eta",electrons[electrons_select[3]].eta)
             self.out.fillBranch("ele3_phi",electrons[electrons_select[3]].phi)
+            self.out.fillBranch("ele3_m",electrons[electrons_select[3]].mass)
 
         # 4mu 
         elif lepChannel == "4mu":
@@ -400,15 +428,22 @@ class ZZG_Producer(Module):
             self.out.fillBranch("muon0_pt",muons[muons_select[0]].pt)
             self.out.fillBranch("muon0_eta",muons[muons_select[0]].eta)
             self.out.fillBranch("muon0_phi",muons[muons_select[0]].phi)
+            self.out.fillBranch("muon0_m",muons[muons_select[0]].mass)
+
             self.out.fillBranch("muon1_pt",muons[muons_select[1]].pt)
             self.out.fillBranch("muon1_eta",muons[muons_select[1]].eta)
             self.out.fillBranch("muon1_phi",muons[muons_select[1]].phi)
+            self.out.fillBranch("muon1_m",muons[muons_select[1]].mass)
+
             self.out.fillBranch("muon2_pt",muons[muons_select[2]].pt)
             self.out.fillBranch("muon2_eta",muons[muons_select[2]].eta)
             self.out.fillBranch("muon2_phi",muons[muons_select[2]].phi)
+            self.out.fillBranch("muon2_m",muons[muons_select[2]].mass)
+            
             self.out.fillBranch("muon3_pt",muons[muons_select[3]].pt)
             self.out.fillBranch("muon3_eta",muons[muons_select[3]].eta)
             self.out.fillBranch("muon3_phi",muons[muons_select[3]].phi)
+            self.out.fillBranch("muon3_m",muons[muons_select[3]].mass)
 
         else:
             return False

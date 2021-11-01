@@ -18,6 +18,10 @@ keep *met*
 keep *njets*
 keep n*
 keep *ll*
+keep control*
+keep fake*
+keep prompt*
+
 
 # keep max*
 
