@@ -22,9 +22,9 @@ config.Data.inputDataset = '/SingleMuon/Run2018D-02Apr2020-v1/NANOAOD'
 config.Data.inputDBS = 'global'
 config.Data.splitting = 'LumiBased' #'LumiBased', 'EventAwareLumiBased'  
 config.Data.unitsPerJob = 80
-config.Data.lumiMask = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/Legacy_2018/Cert_314472-325175_13TeV_Legacy2018_Collisions18_JSON.txt'
+config.Data.lumiMask = 'https://cms-service-dqmdc.web.cern.ch/CAF/certification/Collisions18/13TeV/ReReco/Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt'
 
-config.Data.outLFNDirBase ='/store/user/zhyuan/ZZG_2018_v1/'
+config.Data.outLFNDirBase ='/store/user/zhyuan/ZZG_2018_v2/'
 config.Data.publication = False
 config.Data.ignoreLocality = True
 config.Data.allowNonValidInputDataset = True
