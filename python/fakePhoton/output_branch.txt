@@ -21,6 +21,7 @@ keep *ll*
 keep control*
 keep fake*
 keep prompt*
+keep data*
 
 
 # keep max*
