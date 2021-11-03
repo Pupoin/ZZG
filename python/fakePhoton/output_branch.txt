@@ -3,25 +3,20 @@ drop * # start with all
 keep event
 keep lumi
 keep run
-keep *channel*
-keep *pass*
-keep ele* 
-keep muon*
-keep *prompt
-keep  photon*
+
 keep raw*
 keep pu* 
 keep *photon*
 keep *weight*
 keep *MET*
 keep *met*
-keep *njets*
-keep n*
-keep *ll*
+
+keep channel
 keep control*
 keep fake*
 keep prompt*
 keep data*
+keep loose*
 
 
 
@@ -84,14 +79,6 @@ keep Jet_jetId
 keep Jet_rawFactor
 keep Jet_btagDeepB
 keep Jet_btagCSVV2
-# keep HLT_Ele27_WPTight_Gsf
-# keep HLT_Ele32_WPTight_Gsf
-# keep HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL
-# keep HLT_Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30 
-# keep HLT_IsoMu24
-# keep HLT_IsoTkMu24
-# keep HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8
-# keep HLT_Mu17_TrkIsoVVL
 keep HLT*
 keep Pileup_nPU
 keep Pileup_nTrueInt

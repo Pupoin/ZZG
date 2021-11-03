@@ -31,20 +31,21 @@ class ZZG_Producer(Module):
         self.out.branch("channel",  "I")
         
         ########################################################
+        self.out.branch("loose_electron_ismatch", "O", 4)
+        self.out.branch("loose_electron_idx", "I", 4)
+        self.out.branch("loose_electron_pdgId","I",4)
+        self.out.branch("loose_electron_pt","F",4)
+        self.out.branch("loose_electron_eta","F",4)
+        self.out.branch("loose_electron_phi","F",4)
+        self.out.branch("loose_electron_mass","F",4)
 
-        self.out.branch("loose_electron_ismatch", "O", lenVar=4)
-        self.out.branch("loose_electron_pdgId","I",lenVar=4)
-        self.out.branch("loose_electron_pt","F",lenVar=4)
-        self.out.branch("loose_electron_eta","F",lenVar=4)
-        self.out.branch("loose_electron_phi","F",lenVar=4)
-        self.out.branch("loose_electron_mass","F",lenVar=4)
-
-        self.out.branch("loose_muon_ismatch", "O", lenVar=4)
-        self.out.branch("loose_muon_pdgId","I",lenVar=4)
-        self.out.branch("loose_muon_pt","F",lenVar=4)
-        self.out.branch("loose_muon_eta","F",lenVar=4)
-        self.out.branch("loose_muon_phi","F",lenVar=4)
-        self.out.branch("loose_muon_mass","F",lenVar=4)
+        self.out.branch("loose_muon_ismatch", "O", 4)
+        self.out.branch("loose_muon_idx", "I", 4)
+        self.out.branch("loose_muon_pdgId","I",4)
+        self.out.branch("loose_muon_pt","F",4)
+        self.out.branch("loose_muon_eta","F",4)
+        self.out.branch("loose_muon_phi","F",4)
+        self.out.branch("loose_muon_mass","F",4)
 
         ########################################################
 
@@ -93,7 +94,7 @@ class ZZG_Producer(Module):
         
         # PV selection
         if (event.PV_npvsGood<1): return False
-        if ((event.nMuon + event.nElectron) < 3): return False
+        # if ((event.nMuon + event.nElectron) < 3): return False
 
         electrons = Collection(event, "Electron")
         muons = Collection(event, "Muon")
@@ -137,52 +138,55 @@ class ZZG_Producer(Module):
                 electrons_select.append(i)
 
         lepChannel = ""
+        channel = 0 
         if len(electrons_select)==2 and len(muons_select)==2 and sum_eleCharge==0 and sum_muonCharge==0:
             lepChannel = "2e2mu"
+            channel = 1
         elif len(muons_select)==4 and sum_muonCharge==0:
             lepChannel = "4mu"
+            channel = 2
         elif len(electrons_select)==4 and sum_eleCharge==0:
             lepChannel = "4e"
+            channel = 3
         elif len(muons_select)==2 and sum_muonCharge==0:
             lepChannel = "2mu"
+            channel = 4
         elif len(electrons_select)==2 and sum_eleCharge==0:
             lepChannel = "2e"
+            channel = 5
         else:
             return False
 
+        loose_electron_idx = [-1]*4
         loose_electron_pdgId = [0]*4
         loose_electron_pt = [-99]*4
         loose_electron_eta = [-99]*4
         loose_electron_phi = [-99]*4
         loose_electron_mass = [-99]*4  
 
+        loose_muon_idx = [-1]*4
         loose_muon_pdgId = [0]*4
         loose_muon_pt = [-99]*4
         loose_muon_eta = [-99]*4
         loose_muon_phi = [-99]*4
         loose_muon_mass = [-99]*4
-        for i in range(len(muons_select)):
-            idx = muons_select[i]
+        for i in range(len(electrons_select)):
+            idx = electrons_select[i]
+            loose_electron_idx  [i]  = electrons_select[i]
             loose_electron_pdgId[i]  = electrons[idx].pdgId
             loose_electron_pt   [i]  = electrons[idx].pt 
             loose_electron_eta  [i]  = electrons[idx].eta
             loose_electron_phi  [i]  = electrons[idx].phi
             loose_electron_mass [i]  = electrons[idx].mass 
 
-        for i in range(len(electrons_select)):
-            idx = electrons_select[i]
+        for i in range(len(muons_select)):
+            idx = muons_select[i]
+            loose_muon_idx  [i] = muons_select[i]
             loose_muon_pdgId[i] = muons[idx].pdgId  
             loose_muon_pt   [i] = muons[idx].pt 
             loose_muon_eta  [i] = muons[idx].eta 
             loose_muon_phi  [i] = muons[idx].phi 
             loose_muon_mass [i] = muons[idx].mass 
-
-        channel = 0 
-        # 2e2mu: 1
-        # 4e:    2
-        # 4mu:   3
-        # 2e :   4
-        # 2mu :  5
 
         isprompt_mask = (1 << 0) #isPrompt
         isdirectprompttaudecayproduct_mask = (1 << 5) #isDirectPromptTauDecayProduct
@@ -197,32 +201,21 @@ class ZZG_Producer(Module):
 
         # lepton matching
         if hasattr(event, 'nGenPart'):
-            print 'calculate the lepton flag in channel 4e'
-            for ilep in electrons_select:
+            # print 'calculate the lepton flag'
+            for ilep in range(len(electrons_select)):
                 for i in range(0,len(genparts)):
                     if genparts[i].pt > 5 and abs(genparts[i].pdgId) == 11 \
                     and ((genparts[i].statusFlags & isprompt_mask == isprompt_mask) or (genparts[i].statusFlags & isprompttaudecayproduct == isprompttaudecayproduct)) \
                     and deltaR(electrons[electrons_select[ilep]].eta,electrons[electrons_select[ilep]].phi,genparts[i].eta,genparts[i].phi) < 0.3:
                         loose_electron_ismatch[ilep] = True
                         break             
-            for ilep in muons_select:               
+            for ilep in range(len(muons_select)):               
                 for i in range(0,len(genparts)):
                     if genparts[i].pt > 5 and abs(genparts[i].pdgId) == 13 \
                     and ((genparts[i].statusFlags & isprompt_mask == isprompt_mask) or (genparts[i].statusFlags & isprompttaudecayproduct == isprompttaudecayproduct)) \
                     and deltaR(muons[muons_select[ilep]].eta,muons[muons_select[ilep]].phi,genparts[i].eta,genparts[i].phi) < 0.3:
                         loose_muon_ismatch[ilep] = True
                         break
-
-        if lepChannel == "2e2mu": 
-            channel = 1
-        elif lepChannel == "4e":
-            channel = 2
-        elif lepChannel == "4mu":
-            channel = 3
-        elif lepChannel == "2e":                            
-            channel = 4
-        elif lepChannel == "2mu":
-            channel = 5
 
 
         self.out.fillBranch("channel",channel) 
@@ -239,6 +232,8 @@ class ZZG_Producer(Module):
         self.out.fillBranch("loose_muon_eta",loose_muon_eta)
         self.out.fillBranch("loose_muon_phi",loose_muon_phi)
         self.out.fillBranch("loose_muon_mass",loose_muon_mass)
+
+
 
         # select  prompt photons  from signal mc
         for i in range(0,len(photons)):
@@ -398,49 +393,44 @@ class ZZG_Producer(Module):
 
 
 
+        if hasattr(event,'Pileup_nPU'):    
+            self.out.fillBranch("npu",event.Pileup_nPU)
+        else:
+            self.out.fillBranch("npu",0)
+    
+        if hasattr(event,'Pileup_nTrueInt'):    
+            self.out.fillBranch("ntruepu",event.Pileup_nTrueInt)
+        else:
+            self.out.fillBranch("ntruepu",0)
+
+        self.out.fillBranch("npvs",event.PV_npvs)
+        self.out.fillBranch("met",event.MET_pt)
+        self.out.fillBranch("metup",sqrt(pow(event.MET_pt*cos(event.MET_phi) + event.MET_MetUnclustEnUpDeltaX,2) + pow(event.MET_pt*sin(event.MET_phi) + event.MET_MetUnclustEnUpDeltaY,2)))
+        self.out.fillBranch("puppimet",event.PuppiMET_pt)
+        self.out.fillBranch("puppimetphi",event.PuppiMET_phi)
+        self.out.fillBranch("rawmet",event.RawMET_pt)
+        self.out.fillBranch("rawmetphi",event.RawMET_phi)
+        self.out.fillBranch("metphi",event.MET_phi)
 
 
-
-
-        if len(lepChannel) !=0 :
-            if hasattr(event,'Pileup_nPU'):    
-                self.out.fillBranch("npu",event.Pileup_nPU)
+        self.out.fillBranch("event",event.event)
+        self.out.fillBranch("lumi",event.luminosityBlock)
+        self.out.fillBranch("run",event.run)
+        # print event.event,event.luminosityBlock,event.run
+        if hasattr(event,'Generator_weight'):
+            if event.Generator_weight > 0 :
+                n_pos=1
+                n_minus=0
             else:
-                self.out.fillBranch("npu",0)
-        
-            if hasattr(event,'Pileup_nTrueInt'):    
-                self.out.fillBranch("ntruepu",event.Pileup_nTrueInt)
-            else:
-                self.out.fillBranch("ntruepu",0)
-
-            self.out.fillBranch("npvs",event.PV_npvs)
-            self.out.fillBranch("met",event.MET_pt)
-            self.out.fillBranch("metup",sqrt(pow(event.MET_pt*cos(event.MET_phi) + event.MET_MetUnclustEnUpDeltaX,2) + pow(event.MET_pt*sin(event.MET_phi) + event.MET_MetUnclustEnUpDeltaY,2)))
-            self.out.fillBranch("puppimet",event.PuppiMET_pt)
-            self.out.fillBranch("puppimetphi",event.PuppiMET_phi)
-            self.out.fillBranch("rawmet",event.RawMET_pt)
-            self.out.fillBranch("rawmetphi",event.RawMET_phi)
-            self.out.fillBranch("metphi",event.MET_phi)
-
-
-            self.out.fillBranch("event",event.event)
-            self.out.fillBranch("lumi",event.luminosityBlock)
-            self.out.fillBranch("run",event.run)
-            # print event.event,event.luminosityBlock,event.run
-            if hasattr(event,'Generator_weight'):
-                if event.Generator_weight > 0 :
-                    n_pos=1
-                    n_minus=0
-                else:
-                    n_minus=1
-                    n_pos=0
-                self.out.fillBranch("gen_weight",event.Generator_weight)
-                self.out.fillBranch("n_pos",n_pos)
-                self.out.fillBranch("n_minus",n_minus)
-            else:    
-                self.out.fillBranch("gen_weight",0)
-                self.out.fillBranch("n_pos",0)
-                self.out.fillBranch("n_minus",0)
+                n_minus=1
+                n_pos=0
+            self.out.fillBranch("gen_weight",event.Generator_weight)
+            self.out.fillBranch("n_pos",n_pos)
+            self.out.fillBranch("n_minus",n_minus)
+        else:    
+            self.out.fillBranch("gen_weight",0)
+            self.out.fillBranch("n_pos",0)
+            self.out.fillBranch("n_minus",0)
 
         return True
 
