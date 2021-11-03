@@ -365,9 +365,6 @@ class ZZG_Producer(Module):
 
         # 4e
         elif lepChannel == "4e":
-            # if deltaR(electrons[electrons_select[0]].eta,electrons[electrons_select[0]].phi,electrons[electrons_select[1]].eta,electrons[electrons_select[1]].phi)<0.5:
-            #    return False 
-            # print 'test',len(genparts)
             if hasattr(event, 'nGenPart'):
                 print 'calculate the lepton flag in channel 4e'
 
@@ -414,8 +411,6 @@ class ZZG_Producer(Module):
 
         # 4mu 
         elif lepChannel == "4mu":
-            # if deltaR(muons[muons_select[0]].eta,muons[muons_select[0]].phi,muons[muons_select[1]].eta,muons[muons_select[1]].phi)<0.5:
-            #    return False 
             if hasattr(event, 'nGenPart'):
                 print 'calculate the lepton flag in channel 4mu'
 
@@ -476,15 +471,16 @@ class ZZG_Producer(Module):
             channel = 4
             self.out.fillBranch("channel",channel)
             self.out.fillBranch("n_ele_ismatch",n_ele_ismatch)
-            self.out.fillBranch("muon0_pt",muons[muons_select[0]].pt)
-            self.out.fillBranch("muon0_eta",muons[muons_select[0]].eta)
-            self.out.fillBranch("muon0_phi",muons[muons_select[0]].phi)
-            self.out.fillBranch("muon0_m",muons[muons_select[0]].mass)
+            
+            self.out.fillBranch("ele0_pt", electrons[electrons_select[0]].pt)
+            self.out.fillBranch("ele0_eta",electrons[electrons_select[0]].eta)
+            self.out.fillBranch("ele0_phi",electrons[electrons_select[0]].phi)
+            self.out.fillBranch("ele0_m",electrons[electrons_select[0]].mass)
 
-            self.out.fillBranch("muon1_pt",muons[muons_select[1]].pt)
-            self.out.fillBranch("muon1_eta",muons[muons_select[1]].eta)
-            self.out.fillBranch("muon1_phi",muons[muons_select[1]].phi)
-            self.out.fillBranch("muon1_m",muons[muons_select[1]].mass)
+            self.out.fillBranch("ele1_pt", electrons[electrons_select[1]].pt)
+            self.out.fillBranch("ele1_eta",electrons[electrons_select[1]].eta)
+            self.out.fillBranch("ele1_phi",electrons[electrons_select[1]].phi)
+            self.out.fillBranch("ele1_m",electrons[electrons_select[1]].mass)
 
 
         # 2mu
@@ -501,20 +497,19 @@ class ZZG_Producer(Module):
                         n_muon_ismatch += 1<<1
                         break
 
-
             channel = 5
             self.out.fillBranch("channel",channel)
-            self.out.fillBranch("n_ele_ismatch",n_ele_ismatch)
-            
-            self.out.fillBranch("ele0_pt", electrons[electrons_select[0]].pt)
-            self.out.fillBranch("ele0_eta",electrons[electrons_select[0]].eta)
-            self.out.fillBranch("ele0_phi",electrons[electrons_select[0]].phi)
-            self.out.fillBranch("ele0_m",electrons[electrons_select[0]].mass)
+            self.out.fillBranch("n_muon_ismatch",n_muon_ismatch)
+            self.out.fillBranch("muon0_pt",muons[muons_select[0]].pt)
+            self.out.fillBranch("muon0_eta",muons[muons_select[0]].eta)
+            self.out.fillBranch("muon0_phi",muons[muons_select[0]].phi)
+            self.out.fillBranch("muon0_m",muons[muons_select[0]].mass)
 
-            self.out.fillBranch("ele1_pt", electrons[electrons_select[1]].pt)
-            self.out.fillBranch("ele1_eta",electrons[electrons_select[1]].eta)
-            self.out.fillBranch("ele1_phi",electrons[electrons_select[1]].phi)
-            self.out.fillBranch("ele1_m",electrons[electrons_select[1]].mass)
+            self.out.fillBranch("muon1_pt",muons[muons_select[1]].pt)
+            self.out.fillBranch("muon1_eta",muons[muons_select[1]].eta)
+            self.out.fillBranch("muon1_phi",muons[muons_select[1]].phi)
+            self.out.fillBranch("muon1_m",muons[muons_select[1]].mass)
+
 
         else:
             return False
