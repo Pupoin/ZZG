@@ -219,6 +219,7 @@ class ZZG_Producer(Module):
 
 
         self.out.fillBranch("channel",channel) 
+        self.out.fillBranch("loose_electron_idx",loose_electron_idx) 
         self.out.fillBranch("loose_electron_ismatch",loose_electron_ismatch) 
         self.out.fillBranch("loose_electron_pdgId",loose_electron_pdgId)
         self.out.fillBranch("loose_electron_pt",loose_electron_pt)
@@ -226,6 +227,7 @@ class ZZG_Producer(Module):
         self.out.fillBranch("loose_electron_phi",loose_electron_phi)
         self.out.fillBranch("loose_electron_mass",loose_electron_mass)
 
+        self.out.fillBranch("loose_muon_idx",loose_muon_idx)  
         self.out.fillBranch("loose_muon_ismatch",loose_muon_ismatch)  
         self.out.fillBranch("loose_muon_pdgId",loose_muon_pdgId)
         self.out.fillBranch("loose_muon_pt",loose_muon_pt)
