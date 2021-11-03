@@ -31,48 +31,21 @@ class ZZG_Producer(Module):
         self.out.branch("channel",  "I")
         
         ########################################################
-        self.out.branch("n_ele_ismatch", "I")
-        self.out.branch("n_muon_ismatch", "I")
 
-        self.out.branch("ele0_pt", "F")
-        self.out.branch("ele0_eta", "F")
-        self.out.branch("ele0_phi", "F")
-        self.out.branch("ele0_m", "F")
+        self.out.branch("loose_electron_ismatch", "O", lenVar=4)
+        self.out.branch("loose_electron_pdgId","I",lenVar=4)
+        self.out.branch("loose_electron_pt","F",lenVar=4)
+        self.out.branch("loose_electron_eta","F",lenVar=4)
+        self.out.branch("loose_electron_phi","F",lenVar=4)
+        self.out.branch("loose_electron_mass","F",lenVar=4)
 
-        self.out.branch("ele1_pt", "F")
-        self.out.branch("ele1_eta", "F")
-        self.out.branch("ele1_phi", "F")
-        self.out.branch("ele1_m", "F")
-        
-        self.out.branch("ele2_pt", "F")
-        self.out.branch("ele2_eta", "F")
-        self.out.branch("ele2_phi", "F")
-        self.out.branch("ele2_m", "F")
+        self.out.branch("loose_muon_ismatch", "O", lenVar=4)
+        self.out.branch("loose_muon_pdgId","I",lenVar=4)
+        self.out.branch("loose_muon_pt","F",lenVar=4)
+        self.out.branch("loose_muon_eta","F",lenVar=4)
+        self.out.branch("loose_muon_phi","F",lenVar=4)
+        self.out.branch("loose_muon_mass","F",lenVar=4)
 
-        self.out.branch("ele3_pt", "F")
-        self.out.branch("ele3_eta", "F")
-        self.out.branch("ele3_phi", "F")
-        self.out.branch("ele3_m", "F")
-
-        self.out.branch("muon0_pt", "F")
-        self.out.branch("muon0_eta", "F")
-        self.out.branch("muon0_phi", "F")
-        self.out.branch("muon0_m", "F")
-
-        self.out.branch("muon1_pt", "F")
-        self.out.branch("muon1_eta", "F")
-        self.out.branch("muon1_phi", "F")
-        self.out.branch("muon1_m", "F")
-
-        self.out.branch("muon2_pt", "F")
-        self.out.branch("muon2_eta", "F")
-        self.out.branch("muon2_phi", "F")
-        self.out.branch("muon2_m", "F")
-
-        self.out.branch("muon3_pt", "F")
-        self.out.branch("muon3_eta", "F")
-        self.out.branch("muon3_phi", "F")
-        self.out.branch("muon3_m", "F")
         ########################################################
 
         self.out.branch("promptphotonpt",  "F")
@@ -176,6 +149,96 @@ class ZZG_Producer(Module):
             lepChannel = "2e"
         else:
             return False
+
+        loose_electron_pdgId = [0]*4
+        loose_electron_pt = [-99]*4
+        loose_electron_eta = [-99]*4
+        loose_electron_phi = [-99]*4
+        loose_electron_mass = [-99]*4  
+
+        loose_muon_pdgId = [0]*4
+        loose_muon_pt = [-99]*4
+        loose_muon_eta = [-99]*4
+        loose_muon_phi = [-99]*4
+        loose_muon_mass = [-99]*4
+        for i in range(len(muons_select)):
+            idx = muons_select[i]
+            loose_electron_pdgId[i]  = electrons[idx].pdgId
+            loose_electron_pt   [i]  = electrons[idx].pt 
+            loose_electron_eta  [i]  = electrons[idx].eta
+            loose_electron_phi  [i]  = electrons[idx].phi
+            loose_electron_mass [i]  = electrons[idx].mass 
+
+        for i in range(len(electrons_select)):
+            idx = electrons_select[i]
+            loose_muon_pdgId[i] = muons[idx].pdgId  
+            loose_muon_pt   [i] = muons[idx].pt 
+            loose_muon_eta  [i] = muons[idx].eta 
+            loose_muon_phi  [i] = muons[idx].phi 
+            loose_muon_mass [i] = muons[idx].mass 
+
+        channel = 0 
+        # 2e2mu: 1
+        # 4e:    2
+        # 4mu:   3
+        # 2e :   4
+        # 2mu :  5
+
+        isprompt_mask = (1 << 0) #isPrompt
+        isdirectprompttaudecayproduct_mask = (1 << 5) #isDirectPromptTauDecayProduct
+        isdirecttaudecayproduct_mask = (1 << 4) #isDirectTauDecayProduct
+        isprompttaudecayproduct = (1 << 3) #isPromptTauDecayProduct
+        isfromhardprocess_mask = (1 << 8) #isPrompt
+
+        # 2e2mu channel, lep mathcing to gen level ---------------------------------------------
+        loose_electron_ismatch = [False]*4
+        loose_muon_ismatch = [False]*4
+
+
+        # lepton matching
+        if hasattr(event, 'nGenPart'):
+            print 'calculate the lepton flag in channel 4e'
+            for ilep in electrons_select:
+                for i in range(0,len(genparts)):
+                    if genparts[i].pt > 5 and abs(genparts[i].pdgId) == 11 \
+                    and ((genparts[i].statusFlags & isprompt_mask == isprompt_mask) or (genparts[i].statusFlags & isprompttaudecayproduct == isprompttaudecayproduct)) \
+                    and deltaR(electrons[electrons_select[ilep]].eta,electrons[electrons_select[ilep]].phi,genparts[i].eta,genparts[i].phi) < 0.3:
+                        loose_electron_ismatch[ilep] = True
+                        break             
+            for ilep in muons_select:               
+                for i in range(0,len(genparts)):
+                    if genparts[i].pt > 5 and abs(genparts[i].pdgId) == 13 \
+                    and ((genparts[i].statusFlags & isprompt_mask == isprompt_mask) or (genparts[i].statusFlags & isprompttaudecayproduct == isprompttaudecayproduct)) \
+                    and deltaR(muons[muons_select[ilep]].eta,muons[muons_select[ilep]].phi,genparts[i].eta,genparts[i].phi) < 0.3:
+                        loose_muon_ismatch[ilep] = True
+                        break
+
+        if lepChannel == "2e2mu": 
+            channel = 1
+        elif lepChannel == "4e":
+            channel = 2
+        elif lepChannel == "4mu":
+            channel = 3
+        elif lepChannel == "2e":                            
+            channel = 4
+        elif lepChannel == "2mu":
+            channel = 5
+
+
+        self.out.fillBranch("channel",channel) 
+        self.out.fillBranch("loose_electron_ismatch",loose_electron_ismatch) 
+        self.out.fillBranch("loose_electron_pdgId",loose_electron_pdgId)
+        self.out.fillBranch("loose_electron_pt",loose_electron_pt)
+        self.out.fillBranch("loose_electron_eta",loose_electron_eta)
+        self.out.fillBranch("loose_electron_phi",loose_electron_phi)
+        self.out.fillBranch("loose_electron_mass",loose_electron_mass)
+
+        self.out.fillBranch("loose_muon_ismatch",loose_muon_ismatch)  
+        self.out.fillBranch("loose_muon_pdgId",loose_muon_pdgId)
+        self.out.fillBranch("loose_muon_pt",loose_muon_pt)
+        self.out.fillBranch("loose_muon_eta",loose_muon_eta)
+        self.out.fillBranch("loose_muon_phi",loose_muon_phi)
+        self.out.fillBranch("loose_muon_mass",loose_muon_mass)
 
         # select  prompt photons  from signal mc
         for i in range(0,len(photons)):
@@ -296,223 +359,6 @@ class ZZG_Producer(Module):
                 continue
             selected_control_photons.append(i)  # append the control photons
 
-        isprompt_mask = (1 << 0) #isPrompt
-        isdirectprompttaudecayproduct_mask = (1 << 5) #isDirectPromptTauDecayProduct
-        isdirecttaudecayproduct_mask = (1 << 4) #isDirectTauDecayProduct
-        isprompttaudecayproduct = (1 << 3) #isPromptTauDecayProduct
-        isfromhardprocess_mask = (1 << 8) #isPrompt
-
-        channel = 0 
-        # 2e2mu:     1
-        # 4e:        2
-        # 4mu:       3
-        # 2e : 4
-        #  2mu : 5
-
-        # 2e2mu channel, lep mathcing to gen level ---------------------------------------------
-        mll = -10
-        ptll = -10
-        n_ele_ismatch = 0
-        n_muon_ismatch = 0
-        
-
-        # 2e2mu
-        if lepChannel == "2e2mu": 
-            if hasattr(event, 'nGenPart'):
-                print 'calculate the lepton flag in channel 2e2mu'
-
-                for i in range(0,len(genparts)):
-                    if genparts[i].pt > 5 and abs(genparts[i].pdgId) == 11 and ((genparts[i].statusFlags & isprompt_mask == isprompt_mask) or (genparts[i].statusFlags & isprompttaudecayproduct == isprompttaudecayproduct)) and deltaR(electrons[electrons_select[0]].eta,electrons[electrons_select[0]].phi,genparts[i].eta,genparts[i].phi) < 0.3:
-                        n_ele_ismatch += 1<<0
-                        break
-                for j in range(0,len(genparts)):
-                    if genparts[j].pt > 5 and abs(genparts[j].pdgId) == 11 and ((genparts[j].statusFlags & isprompt_mask == isprompt_mask) or (genparts[j].statusFlags & isprompttaudecayproduct == isprompttaudecayproduct)) and deltaR(electrons[electrons_select[1]].eta,electrons[electrons_select[1]].phi,genparts[j].eta,genparts[j].phi) < 0.3:
-                        n_ele_ismatch += 1<<1
-                        break
-                            
-                for i in range(0,len(genparts)):
-                    if genparts[i].pt > 5 and abs(genparts[i].pdgId) == 13 and ((genparts[i].statusFlags & isprompt_mask == isprompt_mask) or (genparts[i].statusFlags & isprompttaudecayproduct == isprompttaudecayproduct)) and deltaR(muons[muons_select[0]].eta,muons[muons_select[0]].phi,genparts[i].eta,genparts[i].phi) < 0.3:
-                        n_muon_ismatch += 1<<2
-                        break
-                for j in range(0,len(genparts)):
-                    if genparts[j].pt > 5 and abs(genparts[j].pdgId) == 13 and ((genparts[j].statusFlags & isprompt_mask == isprompt_mask) or (genparts[j].statusFlags & isprompttaudecayproduct == isprompttaudecayproduct)) and deltaR(muons[muons_select[1]].eta,muons[muons_select[1]].phi,genparts[j].eta,genparts[j].phi) < 0.3:
-                        n_muon_ismatch += 1<<3
-                        break
-
-            channel = 1
-            self.out.fillBranch("channel",channel)
-            self.out.fillBranch("n_ele_ismatch",n_ele_ismatch)
-            self.out.fillBranch("n_muon_ismatch",n_muon_ismatch)
-            self.out.fillBranch("muon0_pt",muons[muons_select[0]].pt)
-            self.out.fillBranch("muon0_eta",muons[muons_select[0]].eta)
-            self.out.fillBranch("muon0_phi",muons[muons_select[0]].phi)
-            self.out.fillBranch("muon0_m",muons[muons_select[0]].mass)
-
-            self.out.fillBranch("muon1_pt",muons[muons_select[1]].pt)
-            self.out.fillBranch("muon1_eta",muons[muons_select[1]].eta)
-            self.out.fillBranch("muon1_phi",muons[muons_select[1]].phi)
-            self.out.fillBranch("muon1_m",muons[muons_select[1]].mass)
-
-            self.out.fillBranch("ele0_pt",electrons[electrons_select[0]].pt)
-            self.out.fillBranch("ele0_eta",electrons[electrons_select[0]].eta)
-            self.out.fillBranch("ele0_phi",electrons[electrons_select[0]].phi)
-            self.out.fillBranch("ele0_m",electrons[electrons_select[0]].mass)
-
-            self.out.fillBranch("ele1_pt",electrons[electrons_select[1]].pt)
-            self.out.fillBranch("ele1_eta",electrons[electrons_select[1]].eta)
-            self.out.fillBranch("ele1_phi",electrons[electrons_select[1]].phi)
-            self.out.fillBranch("ele1_m",electrons[electrons_select[1]].mass)
-
-        # 4e
-        elif lepChannel == "4e":
-            if hasattr(event, 'nGenPart'):
-                print 'calculate the lepton flag in channel 4e'
-
-                for i in range(0,len(genparts)):
-                    if genparts[i].pt > 5 and abs(genparts[i].pdgId) == 11 and ((genparts[i].statusFlags & isprompt_mask == isprompt_mask) or (genparts[i].statusFlags & isprompttaudecayproduct == isprompttaudecayproduct)) and deltaR(electrons[electrons_select[0]].eta,electrons[electrons_select[0]].phi,genparts[i].eta,genparts[i].phi) < 0.3:
-                        n_ele_ismatch += 1 <<0
-                        break 
-                for j in range(0,len(genparts)):
-                    if genparts[j].pt > 5 and abs(genparts[j].pdgId) == 11 and ((genparts[j].statusFlags & isprompt_mask == isprompt_mask) or (genparts[j].statusFlags & isprompttaudecayproduct == isprompttaudecayproduct)) and deltaR(electrons[electrons_select[1]].eta,electrons[electrons_select[1]].phi,genparts[j].eta,genparts[j].phi) < 0.3:
-                        n_ele_ismatch += 1 <<1
-                        break 
-                for k in range(0,len(genparts)):
-                    if genparts[k].pt > 5 and abs(genparts[k].pdgId) == 11 and ((genparts[k].statusFlags & isprompt_mask == isprompt_mask) or (genparts[k].statusFlags & isprompttaudecayproduct == isprompttaudecayproduct)) and deltaR(electrons[electrons_select[2]].eta,electrons[electrons_select[2]].phi,genparts[k].eta,genparts[k].phi) < 0.3:
-                        n_ele_ismatch += 1 <<2
-                        break 
-                for m in range(0,len(genparts)):
-                    if genparts[m].pt > 5 and abs(genparts[m].pdgId) == 11 and ((genparts[m].statusFlags & isprompt_mask == isprompt_mask) or (genparts[m].statusFlags & isprompttaudecayproduct == isprompttaudecayproduct)) and deltaR(electrons[electrons_select[3]].eta,electrons[electrons_select[3]].phi,genparts[m].eta,genparts[m].phi) < 0.3:
-                        n_ele_ismatch += 1 <<3
-                        break 
-
-            channel = 2
-            self.out.fillBranch("channel",channel)
-            self.out.fillBranch("n_ele_ismatch",n_ele_ismatch)
-            
-            self.out.fillBranch("ele0_pt", electrons[electrons_select[0]].pt)
-            self.out.fillBranch("ele0_eta",electrons[electrons_select[0]].eta)
-            self.out.fillBranch("ele0_phi",electrons[electrons_select[0]].phi)
-            self.out.fillBranch("ele0_m",electrons[electrons_select[0]].mass)
-
-            self.out.fillBranch("ele1_pt", electrons[electrons_select[1]].pt)
-            self.out.fillBranch("ele1_eta",electrons[electrons_select[1]].eta)
-            self.out.fillBranch("ele1_phi",electrons[electrons_select[1]].phi)
-            self.out.fillBranch("ele1_m",electrons[electrons_select[1]].mass)
-
-            self.out.fillBranch("ele2_pt", electrons[electrons_select[2]].pt)
-            self.out.fillBranch("ele2_eta",electrons[electrons_select[2]].eta)
-            self.out.fillBranch("ele2_phi",electrons[electrons_select[2]].phi)
-            self.out.fillBranch("ele2_m",electrons[electrons_select[2]].mass)
-
-            self.out.fillBranch("ele3_pt", electrons[electrons_select[3]].pt)
-            self.out.fillBranch("ele3_eta",electrons[electrons_select[3]].eta)
-            self.out.fillBranch("ele3_phi",electrons[electrons_select[3]].phi)
-            self.out.fillBranch("ele3_m",electrons[electrons_select[3]].mass)
-
-        # 4mu 
-        elif lepChannel == "4mu":
-            if hasattr(event, 'nGenPart'):
-                print 'calculate the lepton flag in channel 4mu'
-
-                for i in range(0,len(genparts)):
-                    if genparts[i].pt > 5 and abs(genparts[i].pdgId) == 13 and ((genparts[i].statusFlags & isprompt_mask == isprompt_mask) or (genparts[i].statusFlags & isprompttaudecayproduct == isprompttaudecayproduct)) and deltaR(muons[muons_select[0]].eta,muons[muons_select[0]].phi,genparts[i].eta,genparts[i].phi) < 0.3:
-                        n_muon_ismatch += 1<<0
-                        break 
-                for j in range(0,len(genparts)):
-                    if genparts[j].pt > 5 and abs(genparts[j].pdgId) == 13 and ((genparts[j].statusFlags & isprompt_mask == isprompt_mask) or (genparts[j].statusFlags & isprompttaudecayproduct == isprompttaudecayproduct)) and deltaR(muons[muons_select[1]].eta,muons[muons_select[1]].phi,genparts[j].eta,genparts[j].phi) < 0.3:
-                        n_muon_ismatch += 1<<1
-                        break 
-                for k in range(0,len(genparts)):
-                    if genparts[k].pt > 5 and abs(genparts[k].pdgId) == 13 and ((genparts[k].statusFlags & isprompt_mask == isprompt_mask) or (genparts[k].statusFlags & isprompttaudecayproduct == isprompttaudecayproduct)) and deltaR(muons[muons_select[2]].eta,muons[muons_select[2]].phi,genparts[k].eta,genparts[k].phi) < 0.3:
-                        n_muon_ismatch += 1<<2
-                        break 
-                for m in range(0,len(genparts)):
-                    if genparts[m].pt > 5 and abs(genparts[m].pdgId) == 13 and ((genparts[m].statusFlags & isprompt_mask == isprompt_mask) or (genparts[m].statusFlags & isprompttaudecayproduct == isprompttaudecayproduct)) and deltaR(muons[muons_select[3]].eta,muons[muons_select[3]].phi,genparts[m].eta,genparts[m].phi) < 0.3:
-                        n_muon_ismatch += 1<<3
-                        break 
-
-            channel = 3
-            self.out.fillBranch("channel",channel)
-            self.out.fillBranch("n_muon_ismatch",n_muon_ismatch)
-            self.out.fillBranch("muon0_pt",muons[muons_select[0]].pt)
-            self.out.fillBranch("muon0_eta",muons[muons_select[0]].eta)
-            self.out.fillBranch("muon0_phi",muons[muons_select[0]].phi)
-            self.out.fillBranch("muon0_m",muons[muons_select[0]].mass)
-
-            self.out.fillBranch("muon1_pt",muons[muons_select[1]].pt)
-            self.out.fillBranch("muon1_eta",muons[muons_select[1]].eta)
-            self.out.fillBranch("muon1_phi",muons[muons_select[1]].phi)
-            self.out.fillBranch("muon1_m",muons[muons_select[1]].mass)
-
-            self.out.fillBranch("muon2_pt",muons[muons_select[2]].pt)
-            self.out.fillBranch("muon2_eta",muons[muons_select[2]].eta)
-            self.out.fillBranch("muon2_phi",muons[muons_select[2]].phi)
-            self.out.fillBranch("muon2_m",muons[muons_select[2]].mass)
-            
-            self.out.fillBranch("muon3_pt",muons[muons_select[3]].pt)
-            self.out.fillBranch("muon3_eta",muons[muons_select[3]].eta)
-            self.out.fillBranch("muon3_phi",muons[muons_select[3]].phi)
-            self.out.fillBranch("muon3_m",muons[muons_select[3]].mass)
-        
-        # 2e
-        elif lepChannel == "2e":
-            if hasattr(event, 'nGenPart'):
-                print 'calculate the lepton flag in channel 2e2mu'
-
-                for i in range(0,len(genparts)):
-                    if genparts[i].pt > 5 and abs(genparts[i].pdgId) == 11 and ((genparts[i].statusFlags & isprompt_mask == isprompt_mask) or (genparts[i].statusFlags & isprompttaudecayproduct == isprompttaudecayproduct)) and deltaR(electrons[electrons_select[0]].eta,electrons[electrons_select[0]].phi,genparts[i].eta,genparts[i].phi) < 0.3:
-                        n_ele_ismatch += 1<<0
-                        break
-                for j in range(0,len(genparts)):
-                    if genparts[j].pt > 5 and abs(genparts[j].pdgId) == 11 and ((genparts[j].statusFlags & isprompt_mask == isprompt_mask) or (genparts[j].statusFlags & isprompttaudecayproduct == isprompttaudecayproduct)) and deltaR(electrons[electrons_select[1]].eta,electrons[electrons_select[1]].phi,genparts[j].eta,genparts[j].phi) < 0.3:
-                        n_ele_ismatch += 1<<1
-                        break
-                            
-            channel = 4
-            self.out.fillBranch("channel",channel)
-            self.out.fillBranch("n_ele_ismatch",n_ele_ismatch)
-            
-            self.out.fillBranch("ele0_pt", electrons[electrons_select[0]].pt)
-            self.out.fillBranch("ele0_eta",electrons[electrons_select[0]].eta)
-            self.out.fillBranch("ele0_phi",electrons[electrons_select[0]].phi)
-            self.out.fillBranch("ele0_m",electrons[electrons_select[0]].mass)
-
-            self.out.fillBranch("ele1_pt", electrons[electrons_select[1]].pt)
-            self.out.fillBranch("ele1_eta",electrons[electrons_select[1]].eta)
-            self.out.fillBranch("ele1_phi",electrons[electrons_select[1]].phi)
-            self.out.fillBranch("ele1_m",electrons[electrons_select[1]].mass)
-
-
-        # 2mu
-        elif lepChannel == "2mu":
-            if hasattr(event, 'nGenPart'):
-                print 'calculate the lepton flag in channel 2e2mu'
-                            
-                for i in range(0,len(genparts)):
-                    if genparts[i].pt > 5 and abs(genparts[i].pdgId) == 13 and ((genparts[i].statusFlags & isprompt_mask == isprompt_mask) or (genparts[i].statusFlags & isprompttaudecayproduct == isprompttaudecayproduct)) and deltaR(muons[muons_select[0]].eta,muons[muons_select[0]].phi,genparts[i].eta,genparts[i].phi) < 0.3:
-                        n_muon_ismatch += 1<<0
-                        break
-                for j in range(0,len(genparts)):
-                    if genparts[j].pt > 5 and abs(genparts[j].pdgId) == 13 and ((genparts[j].statusFlags & isprompt_mask == isprompt_mask) or (genparts[j].statusFlags & isprompttaudecayproduct == isprompttaudecayproduct)) and deltaR(muons[muons_select[1]].eta,muons[muons_select[1]].phi,genparts[j].eta,genparts[j].phi) < 0.3:
-                        n_muon_ismatch += 1<<1
-                        break
-
-            channel = 5
-            self.out.fillBranch("channel",channel)
-            self.out.fillBranch("n_muon_ismatch",n_muon_ismatch)
-            self.out.fillBranch("muon0_pt",muons[muons_select[0]].pt)
-            self.out.fillBranch("muon0_eta",muons[muons_select[0]].eta)
-            self.out.fillBranch("muon0_phi",muons[muons_select[0]].phi)
-            self.out.fillBranch("muon0_m",muons[muons_select[0]].mass)
-
-            self.out.fillBranch("muon1_pt",muons[muons_select[1]].pt)
-            self.out.fillBranch("muon1_eta",muons[muons_select[1]].eta)
-            self.out.fillBranch("muon1_phi",muons[muons_select[1]].phi)
-            self.out.fillBranch("muon1_m",muons[muons_select[1]].mass)
-
-
-        else:
-            return False
         
         if len(selected_prompt_photons)>0:
             photon_ismatch = -10
