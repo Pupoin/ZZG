@@ -147,12 +147,12 @@ class ZZG_Producer(Module):
         elif len(electrons_select)==4 and sum_eleCharge==0:
             lepChannel = "4e"
             channel = 3
-        elif len(electrons_select)==2 and sum_eleCharge==0:
-            lepChannel = "2e"
-            channel = 4
-        elif len(muons_select)==2 and sum_muonCharge==0:
-            lepChannel = "2mu"
-            channel = 5
+        # elif len(electrons_select)==2 and sum_eleCharge==0:
+        #     lepChannel = "2e"
+        #     channel = 4
+        # elif len(muons_select)==2 and sum_muonCharge==0:
+        #     lepChannel = "2mu"
+        #     channel = 5
         else:
             return False
 
