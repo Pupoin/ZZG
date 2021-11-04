@@ -94,7 +94,6 @@ class ZZG_Producer(Module):
         
         # PV selection
         if (event.PV_npvsGood<1): return False
-        # if ((event.nMuon + event.nElectron) < 3): return False
 
         electrons = Collection(event, "Electron")
         muons = Collection(event, "Muon")
@@ -148,11 +147,11 @@ class ZZG_Producer(Module):
         elif len(electrons_select)==4 and sum_eleCharge==0:
             lepChannel = "4e"
             channel = 3
-        elif len(muons_select)==2 and sum_muonCharge==0:
-            lepChannel = "2mu"
-            channel = 4
         elif len(electrons_select)==2 and sum_eleCharge==0:
             lepChannel = "2e"
+            channel = 4
+        elif len(muons_select)==2 and sum_muonCharge==0:
+            lepChannel = "2mu"
             channel = 5
         else:
             return False
