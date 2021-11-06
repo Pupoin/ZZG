@@ -18,9 +18,9 @@ version = f'_v{args.version}/'
 
 datasets={
     'data':{
-        '2018':'dataset_2018_data_nano_v7',
-        '2017':'dataset_2017_data_nano_v7',
-        '2016':'dataset_2016_data_nano_v7',
+        '2018':'dataset_2018_data_nano_v9',
+        '2017':'dataset_2017_data_nano_v9',
+        '2016':'dataset_2016_data_nano_v9',
     },
     'mc':{
         '2018':'dataset_2018_mc_nano_v7',
@@ -38,8 +38,8 @@ def new_py(year,kind,mode,unitsPerJob,modulePath):
         if 'data' in kind:
             mymodule=importlib.import_module(datasets['data'][year])
             _Samples=mymodule.Samples
-            # cfg_dir = os.getcwd() + '/cfg2018_data/'
-            cfg_dir = os.getcwd() + '/'
+            cfg_dir = os.getcwd() + '/cfg2018_data/'
+            # cfg_dir = os.getcwd() + '/'
         else:
             mymodule=importlib.import_module(datasets['mc'][year])
             _Samples=mymodule.Samples
@@ -101,6 +101,10 @@ def new_py(year,kind,mode,unitsPerJob,modulePath):
                 which_data = 'SingleMuon'
             elif 'EGamma' in dataset:
                 which_data = 'EGamma'
+            elif 'SingleElectron' in dataset:
+                which_data = 'SingleElectron'
+            elif 'DoubleEG' in dataset:
+                which_data = 'DoubleEG'
             else:
                 print('unkown dataset name in kind')
             # split = 'Automatic'
