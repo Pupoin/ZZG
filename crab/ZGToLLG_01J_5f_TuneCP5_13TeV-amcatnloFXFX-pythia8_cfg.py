@@ -17,14 +17,14 @@ config.JobType.sendPythonFolder  = True
 
 config.section_("Data")
 #config.Data.outputPrimaryDataset = 'ZZG_fakePhoton'
-config.Data.inputDataset = '/ZGJJToLLGJJ_EWK_aQGC-FS-FM_TuneCP5_13TeV-madgraph-pythia8/RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21-v1/NANOAODSIM'
+config.Data.inputDataset = '/ZGToLLG_01J_5f_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM'
 #config.Data.inputDBS = 'phys03'
 config.Data.inputDBS = 'global'
 config.Data.splitting = 'FileBased' #'LumiBased', 'EventAwareLumiBased'  
-config.Data.unitsPerJob = 1
+config.Data.unitsPerJob = 2
 # config.Data.lumiMask = 'https://cms-service-dqmdc.web.cern.ch/CAF/certification/Collisions18/13TeV/ReReco/Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt'
 
-config.Data.outLFNDirBase ='/store/user/zhyuan/ZGJets_mc/'
+config.Data.outLFNDirBase ='/store/user/zhyuan/ZGToLLG_01J_5f_TuneCP5_13TeV-amcatnloFXFX-pythia8/'
 config.Data.publication = False
 config.Data.ignoreLocality = True
 config.Data.allowNonValidInputDataset = True
