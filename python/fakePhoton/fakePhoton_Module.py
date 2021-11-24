@@ -235,6 +235,15 @@ class ZZG_Producer(Module):
         self.out.fillBranch("loose_muon_mass",loose_muon_mass)
 
 
+        #  1     3         5          7           9       11       13
+        #| pt | scEta | H over EM | sigma ieie | Isoch | IsoNeu | Isopho |
+        mask_full = (1<<1) | (1<<3) | (1 << 5) | (1 << 7) | (1 << 9) | (1 << 11) | (1 << 13) 
+        mask_sieie_chiso = (1<<1) | (1<<3) | (1 << 5) | (1 << 11) | (1 << 13)
+        mask_HoverE = (1<<1) | (1<<3) | (1 << 7) | (1 << 9) | (1 << 11) | (1 << 13)
+        mask_sieie = (1<<1) | (1<<3) | (1 << 5) | (1 << 9) | (1 << 11) | (1 << 13)
+        mask_chiso = (1<<1) | (1<<3) | (1 << 5) | (1 << 7) | (1 << 11) | (1 << 13)
+        mask_neuiso = (1<<1) | (1<<3) | (1 << 5) | (1 << 7) | (1 << 9) | (1 << 13)
+        mask_phoiso = (1<<1) | (1<<3) | (1 << 5) | (1 << 7) | (1 << 9) | (1 << 11)
 
         # select  prompt photons  from signal mc
         for i in range(0,len(photons)):
@@ -245,6 +254,11 @@ class ZZG_Producer(Module):
             if photons[i].pixelSeed:
                 continue
             if photons[i].cutBased <1:
+                continue
+
+            bitmap = photons[i].vidNestedWPBitmap & mask_sieie
+            #save photons pass the ID without sigma ieie 
+            if not (bitmap == mask_sieie_chiso):
                 continue
 
             pass_lepton_dr_cut = True
@@ -258,15 +272,6 @@ class ZZG_Producer(Module):
                 continue
             selected_prompt_photons.append(i)  #append the medium photons passing full ID
        
-        #  1     3         5          7           9       11       13
-        #| pt | scEta | H over EM | sigma ieie | Isoch | IsoNeu | Isopho |
-        mask_full = (1<<1) | (1<<3) | (1 << 5) | (1 << 7) | (1 << 9) | (1 << 11) | (1 << 13) 
-        mask_sieie_chiso = (1<<1) | (1<<3) | (1 << 5) | (1 << 11) | (1 << 13)
-        mask_HoverE = (1<<1) | (1<<3) | (1 << 7) | (1 << 9) | (1 << 11) | (1 << 13)
-        mask_sieie = (1<<1) | (1<<3) | (1 << 5) | (1 << 9) | (1 << 11) | (1 << 13)
-        mask_chiso = (1<<1) | (1<<3) | (1 << 5) | (1 << 7) | (1 << 11) | (1 << 13)
-        mask_neuiso = (1<<1) | (1<<3) | (1 << 5) | (1 << 7) | (1 << 9) | (1 << 13)
-        mask_phoiso = (1<<1) | (1<<3) | (1 << 5) | (1 << 7) | (1 << 9) | (1 << 11)
        
         # select data photons from data, open sieie
         for i in range(0,len(photons)):
