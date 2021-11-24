@@ -258,7 +258,7 @@ class ZZG_Producer(Module):
 
             bitmap = photons[i].vidNestedWPBitmap & mask_sieie
             #save photons pass the ID without sigma ieie 
-            if not (bitmap == mask_sieie_chiso):
+            if not (bitmap == mask_sieie):
                 continue
 
             pass_lepton_dr_cut = True
