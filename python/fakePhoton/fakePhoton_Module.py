@@ -253,8 +253,8 @@ class ZZG_Producer(Module):
                 continue
             if photons[i].pixelSeed:
                 continue
-            if photons[i].cutBased <1:
-                continue
+            # if photons[i].cutBased <1:
+            #     continue
 
             bitmap = photons[i].vidNestedWPBitmap & mask_sieie
             #save photons pass the ID without sigma ieie 
