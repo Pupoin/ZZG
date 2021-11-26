@@ -115,24 +115,24 @@ class ZZG_Producer(Module):
         #selection on muons
         sum_muonCharge = 0
         for i in range(0,len(muons)):
-            if muons[i].pt < 4:
+            if muons[i].pt < 20:
                 continue
             if abs(muons[i].eta) > 2.4:
                 continue
             if muons[i].pfRelIso04_all > 0.25:
                 continue   
-            if muons[i].looseId and abs(muons[i].dxy)<0.5 and abs(muons[i].dz)<1:
+            if muons[i].Muon_mediumId and abs(muons[i].dxy)<0.5 and abs(muons[i].dz)<1:
                 sum_muonCharge = sum_muonCharge + muons[i].charge
                 muons_select.append(i)
 
         # selection on electrons
         sum_eleCharge = 0
         for i in range(0,len(electrons)):
-            if electrons[i].pt < 4:
+            if electrons[i].pt < 20:
                 continue
             if abs(electrons[i].eta + electrons[i].deltaEtaSC) > 2.5:
                 continue
-            if electrons[i].cutBased >= 2 and abs(electrons[i].dz) < 1 and abs(electrons[i].dxy) < 0.5:
+            if electrons[i].cutBased >= 3 and abs(electrons[i].dz) < 1 and abs(electrons[i].dxy) < 0.5:
                 sum_eleCharge = sum_eleCharge + electrons[i].charge
                 electrons_select.append(i)
 
