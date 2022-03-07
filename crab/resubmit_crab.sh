@@ -2,22 +2,22 @@
 if [[ "x${1}" == "x2018" ]]
 then 
     echo "2018 data"
-    crab status -d crab2018/crab_DoubleMuon_Run2018A_2018
-    crab status -d crab2018/crab_DoubleMuon_Run2018B_2018
-    crab status -d crab2018/crab_DoubleMuon_Run2018C_2018
-    crab status -d crab2018/crab_DoubleMuon_Run2018D_2018
-    crab status -d crab2018/crab_EGamma_Run2018A_2018
-    crab status -d crab2018/crab_EGamma_Run2018B_2018
-    crab status -d crab2018/crab_EGamma_Run2018C_2018
-    crab status -d crab2018/crab_EGamma_Run2018D_2018
-    crab status -d crab2018/crab_MuonEG_Run2018A_2018
-    crab status -d crab2018/crab_MuonEG_Run2018B_2018
-    crab status -d crab2018/crab_MuonEG_Run2018C_2018
-    crab status -d crab2018/crab_MuonEG_Run2018D_2018
-    crab status -d crab2018/crab_SingleMuon_Run2018A_2018
-    crab status -d crab2018/crab_SingleMuon_Run2018B_2018
-    crab status -d crab2018/crab_SingleMuon_Run2018C_2018
-    crab status -d crab2018/crab_SingleMuon_Run2018D_2018
+    crab resubmit crab2018/crab_DoubleMuon_Run2018A_2018
+    crab resubmit crab2018/crab_DoubleMuon_Run2018B_2018
+    crab resubmit crab2018/crab_DoubleMuon_Run2018C_2018
+    crab resubmit crab2018/crab_DoubleMuon_Run2018D_2018
+    crab resubmit crab2018/crab_EGamma_Run2018A_2018
+    crab resubmit crab2018/crab_EGamma_Run2018B_2018
+    crab resubmit crab2018/crab_EGamma_Run2018C_2018
+    crab resubmit crab2018/crab_EGamma_Run2018D_2018
+    crab resubmit crab2018/crab_MuonEG_Run2018A_2018
+    crab resubmit crab2018/crab_MuonEG_Run2018B_2018
+    crab resubmit crab2018/crab_MuonEG_Run2018C_2018
+    crab resubmit crab2018/crab_MuonEG_Run2018D_2018
+    crab resubmit crab2018/crab_SingleMuon_Run2018A_2018
+    crab resubmit crab2018/crab_SingleMuon_Run2018B_2018
+    crab resubmit crab2018/crab_SingleMuon_Run2018C_2018
+    crab resubmit crab2018/crab_SingleMuon_Run2018D_2018
 elif [[ "x${1}" == "x2017" ]]
 then 
     echo " 2017 data"

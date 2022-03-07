@@ -10,7 +10,7 @@ Samples["DoubleMuon_Run2018D"]      = {'nanoAOD': '/DoubleMuon/Run2018D-UL2018_M
 Samples["EGamma_Run2018A"]      = {'nanoAOD': '/EGamma/Run2018A-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD'}
 Samples["EGamma_Run2018B"]      = {'nanoAOD': '/EGamma/Run2018B-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD'}
 Samples["EGamma_Run2018C"]      = {'nanoAOD': '/EGamma/Run2018C-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD'}
-# Samples["EGamma_Run2018D"]      = {'nanoAOD': '/EGamma/Run2018D-UL2018_MiniAODv2_NanoAODv9-v3/NANOAOD'} # Status: PRODUCTION
+Samples["EGamma_Run2018D"]      = {'nanoAOD': '/EGamma/Run2018D-UL2018_MiniAODv2_NanoAODv9-v3/NANOAOD'} 
 
 Samples["SingleMuon_Run2018A"]      = {'nanoAOD': '/SingleMuon/Run2018A-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD'}
 Samples["SingleMuon_Run2018B"]      = {'nanoAOD': '/SingleMuon/Run2018B-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD'}

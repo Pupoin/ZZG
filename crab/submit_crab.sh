@@ -1,7 +1,7 @@
 
 if [[ "x${1}" == "x2018" ]]
 then 
-    ecoh "2018 data"
+    echo "2018 data"
     crab submit -c cfg2018_data/DoubleMuon_Run2018A_cfg.py  &
     crab submit -c cfg2018_data/DoubleMuon_Run2018B_cfg.py  &
     crab submit -c cfg2018_data/DoubleMuon_Run2018C_cfg.py  &
@@ -51,11 +51,9 @@ then
     crab submit -c cfg2017_data/SingleMuon_Run2017F_cfg.py &
     crab submit -c cfg2017_data/SingleMuon_Run2017G_cfg.py &
     crab submit -c cfg2017_data/SingleMuon_Run2017H_cfg.py &
-
 elif [[ "x${1}" == "x2016" ]]
 then 
     echo "2016 data"
-
     crab submit -c cfg2016_data/DoubleEG_Run2016B_v1_cfg.py &
     crab submit -c cfg2016_data/DoubleEG_Run2016B_v2_cfg.py &
     crab submit -c cfg2016_data/DoubleEG_Run2016C_cfg.py &
@@ -100,5 +98,4 @@ then
     crab submit -c cfg2016_data/SingleMuon_Run2016F_noHIPM_cfg.py &
     crab submit -c cfg2016_data/SingleMuon_Run2016G_cfg.py &
     crab submit -c cfg2016_data/SingleMuon_Run2016H_cfg.py &
-
 fi

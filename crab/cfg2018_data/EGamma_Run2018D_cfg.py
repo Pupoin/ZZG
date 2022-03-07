@@ -3,7 +3,7 @@ from WMCore.Configuration import Configuration
 config = Configuration()
 
 config.section_("General")
-config.General.requestName = 'EGamma_Run2018A_2018'
+config.General.requestName = 'EGamma_Run2018D_2018'
 config.General.transferLogs= True
 config.General.workArea = 'crab2018'
 
@@ -17,7 +17,7 @@ config.JobType.sendPythonFolder  = True
 
 config.section_("Data")
 #config.Data.outputPrimaryDataset = 'ZZG_fakePhoton'
-config.Data.inputDataset = '/EGamma/Run2018A-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD'
+config.Data.inputDataset = '/EGamma/Run2018D-UL2018_MiniAODv2_NanoAODv9-v3/NANOAOD'
 #config.Data.inputDBS = 'phys03'
 config.Data.inputDBS = 'global'
 config.Data.splitting = 'LumiBased' #'LumiBased', 'EventAwareLumiBased'  
@@ -28,7 +28,7 @@ config.Data.outLFNDirBase ='/store/user/zhyuan/ZZG_2018_vmediumIDlep/'
 config.Data.publication = False
 config.Data.ignoreLocality = True
 config.Data.allowNonValidInputDataset = True
-config.Data.outputDatasetTag = 'EGamma_Run2018A_2018'
+config.Data.outputDatasetTag = 'EGamma_Run2018D_2018'
 
 config.section_("Site")
 config.Site.storageSite = "T3_CH_CERNBOX"

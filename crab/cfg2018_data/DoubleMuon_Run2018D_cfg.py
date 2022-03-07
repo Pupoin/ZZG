@@ -21,10 +21,10 @@ config.Data.inputDataset = '/DoubleMuon/Run2018D-UL2018_MiniAODv2_NanoAODv9-v2/N
 #config.Data.inputDBS = 'phys03'
 config.Data.inputDBS = 'global'
 config.Data.splitting = 'LumiBased' #'LumiBased', 'EventAwareLumiBased'  
-config.Data.unitsPerJob = 100
+config.Data.unitsPerJob = 80
 config.Data.lumiMask = 'https://cms-service-dqmdc.web.cern.ch/CAF/certification/Collisions18/13TeV/ReReco/Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt'
 
-config.Data.outLFNDirBase ='/store/user/zhyuan/ZZG_2018_v1/'
+config.Data.outLFNDirBase ='/store/user/zhyuan/ZZG_2018_vmediumIDlep/'
 config.Data.publication = False
 config.Data.ignoreLocality = True
 config.Data.allowNonValidInputDataset = True

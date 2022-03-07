@@ -121,7 +121,7 @@ class ZZG_Producer(Module):
                 continue
             if muons[i].pfRelIso04_all > 0.25:
                 continue   
-            if muons[i].Muon_mediumId and abs(muons[i].dxy)<0.5 and abs(muons[i].dz)<1:
+            if muons[i].mediumId and abs(muons[i].dxy)<0.5 and abs(muons[i].dz)<1:
                 sum_muonCharge = sum_muonCharge + muons[i].charge
                 muons_select.append(i)
 
