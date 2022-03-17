@@ -121,7 +121,7 @@ class ZZG_Producer(Module):
                 continue
             if muons[i].pfRelIso04_all > 0.25:
                 continue   
-            if muons[i].mediumId and abs(muons[i].dxy)<0.5 and abs(muons[i].dz)<1:
+            if muons[i].looseId and abs(muons[i].dxy)<0.5 and abs(muons[i].dz)<1:
                 sum_muonCharge = sum_muonCharge + muons[i].charge
                 muons_select.append(i)
 
@@ -132,7 +132,7 @@ class ZZG_Producer(Module):
                 continue
             if abs(electrons[i].eta + electrons[i].deltaEtaSC) > 2.5:
                 continue
-            if electrons[i].cutBased >= 3 and abs(electrons[i].dz) < 1 and abs(electrons[i].dxy) < 0.5:
+            if electrons[i].cutBased >= 2 and abs(electrons[i].dz) < 1 and abs(electrons[i].dxy) < 0.5:
                 sum_eleCharge = sum_eleCharge + electrons[i].charge
                 electrons_select.append(i)
 
@@ -147,12 +147,12 @@ class ZZG_Producer(Module):
         elif len(electrons_select)==4 and sum_eleCharge==0:
             lepChannel = "4e"
             channel = 3
-        elif len(electrons_select)==2 and sum_eleCharge==0:
-            lepChannel = "2e"
-            channel = 4
-        elif len(muons_select)==2 and sum_muonCharge==0:
-            lepChannel = "2mu"
-            channel = 5
+        # elif len(electrons_select)==2 and sum_eleCharge==0:
+        #     lepChannel = "2e"
+        #     channel = 4
+        # elif len(muons_select)==2 and sum_muonCharge==0:
+        #     lepChannel = "2mu"
+        #     channel = 5
         else:
             return False
 
@@ -368,6 +368,7 @@ class ZZG_Producer(Module):
                     if photons[selected_prompt_photons[0]].genPartIdx >=0 and genpart.pt > 5 and abs(genpart.pdgId) == 22 and ((genparts[photons[selected_prompt_photons[0]].genPartIdx].statusFlags & isprompt_mask == isprompt_mask) or (genparts[photons[selected_prompt_photons[0]].genPartIdx].statusFlags & isdirectprompttaudecayproduct_mask == isdirectprompttaudecayproduct_mask) or (genparts[photons[selected_prompt_photons[0]].genPartIdx].statusFlags & isfromhardprocess_mask == isfromhardprocess_mask)) and deltaR(photons[selected_prompt_photons[0]].eta,photons[selected_prompt_photons[0]].phi,genpart.eta,genpart.phi) < 0.3:
                         photon_ismatch =1
                         break
+            # print "selected_prompt_photons", photons[selected_prompt_photons[0]].pt
             self.out.fillBranch("promptphotonpt",photons[selected_prompt_photons[0]].pt)
             self.out.fillBranch("promptphotoneta",photons[selected_prompt_photons[0]].eta)
             self.out.fillBranch("promptphotonphi",photons[selected_prompt_photons[0]].phi)
@@ -376,6 +377,7 @@ class ZZG_Producer(Module):
             self.out.fillBranch("promptphoton_ismatch",photon_ismatch)
         
         if len(selected_control_photons)>0:
+            # print "selected_control_photons",photons[selected_control_photons[0]].pt
             self.out.fillBranch("controlphotonpt",photons[selected_control_photons[0]].pt)
             self.out.fillBranch("controlphotoneta",photons[selected_control_photons[0]].eta)
             self.out.fillBranch("controlphotonphi",photons[selected_control_photons[0]].phi)
@@ -384,6 +386,7 @@ class ZZG_Producer(Module):
 
 
         if len(selected_fake_photons)>0:  
+            # print "selected_fake_photons", photons[selected_fake_photons[0]].pt
             self.out.fillBranch("fakephotonpt",photons[selected_fake_photons[0]].pt)
             self.out.fillBranch("fakephotoneta",photons[selected_fake_photons[0]].eta)
             self.out.fillBranch("fakephotonphi",photons[selected_fake_photons[0]].phi)
@@ -391,13 +394,37 @@ class ZZG_Producer(Module):
             self.out.fillBranch("fakephotonsieie",photons[selected_fake_photons[0]].sieie)
 
         if len(selected_data_photons)>0:  
+            # print "selected_data_photons", photons[selected_data_photons[0]].pt
             self.out.fillBranch("dataphotonpt",photons[selected_data_photons[0]].pt)
             self.out.fillBranch("dataphotoneta",photons[selected_data_photons[0]].eta)
             self.out.fillBranch("dataphotonphi",photons[selected_data_photons[0]].phi)
             self.out.fillBranch("dataphotonchiso",photons[selected_data_photons[0]].pfRelIso03_chg*photons[selected_data_photons[0]].pt)
             self.out.fillBranch("dataphotonsieie",photons[selected_data_photons[0]].sieie)
+        else:
+            self.out.fillBranch("promptphotonpt", 0)
+            self.out.fillBranch("promptphotoneta", 0)
+            self.out.fillBranch("promptphotonphi", 0)
+            self.out.fillBranch("promptphotonchiso", 0)
+            self.out.fillBranch("promptphotonsieie", 0)
+            self.out.fillBranch("promptphoton_ismatch", 0)
 
+            self.out.fillBranch("controlphotonpt", 0)
+            self.out.fillBranch("controlphotoneta", 0)
+            self.out.fillBranch("controlphotonphi", 0)
+            self.out.fillBranch("controlphotonchiso", 0)
+            self.out.fillBranch("controlphotonsieie", 0)
 
+            self.out.fillBranch("fakephotonpt", 0)
+            self.out.fillBranch("fakephotoneta", 0)
+            self.out.fillBranch("fakephotonphi", 0)
+            self.out.fillBranch("fakephotonchiso", 0)
+            self.out.fillBranch("fakephotonsieie", 0)
+
+            self.out.fillBranch("fakephotonpt", 0)
+            self.out.fillBranch("fakephotoneta", 0)
+            self.out.fillBranch("fakephotonphi", 0)
+            self.out.fillBranch("fakephotonchiso", 0)
+            self.out.fillBranch("fakephotonsieie", 0)
 
         if hasattr(event,'Pileup_nPU'):    
             self.out.fillBranch("npu",event.Pileup_nPU)

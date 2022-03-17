@@ -17,6 +17,8 @@ keep fake*
 keep prompt*
 keep data*
 keep loose*
+keep n_pos
+keep n_minus
 
 
 
