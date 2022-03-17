@@ -1,4 +1,9 @@
 root/
+/tmp
+crab201*/
+crab*201*/
+log.*
+log/
 *root
 cmssw-tmp/
 *log

@@ -34,7 +34,7 @@ def new_py(year,kind,mode,unitsPerJob,modulePath):
     _Samples={}
     if year == '2018':
         outdir = '/store/user/zhyuan/ZZG_2018' + version
-        golden_json = "\'https://cms-service-dqmdc.web.cern.ch/CAF/certification/Collisions18/13TeV/ReReco/Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt\'"
+        golden_json = "\'/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/Legacy_2018/Cert_314472-325175_13TeV_Legacy2018_Collisions18_JSON.txt\'"
         if 'data' in kind:
             mymodule=importlib.import_module(datasets['data'][year])
             _Samples=mymodule.Samples
@@ -46,7 +46,7 @@ def new_py(year,kind,mode,unitsPerJob,modulePath):
             cfg_dir = os.getcwd() + '/cfg2018_mc/'
     elif year == '2017':
         outdir = '/store/user/zhyuan/ZZG_2017' + version
-        golden_json = "\'https://cms-service-dqmdc.web.cern.ch/CAF/certification/Collisions17/13TeV/ReReco/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt\'"
+        golden_json = "\'/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions17/13TeV/Legacy_2017/Cert_294927-306462_13TeV_UL2017_Collisions17_GoldenJSON.txt\'"
         if 'data' in kind:
             mymodule=importlib.import_module(datasets['data'][year])
             _Samples=mymodule.Samples
@@ -58,7 +58,7 @@ def new_py(year,kind,mode,unitsPerJob,modulePath):
     elif year == '2016':
         cfg_dir = os.getcwd() + '/cfg2016/'
         outdir = '/store/user/zhyuan/ZZG_2016' + version
-        golden_json = "\'https://cms-service-dqmdc.web.cern.ch/CAF/certification/Collisions16/13TeV/Cert_271036-284044_13TeV_PromptReco_Collisions16_JSON.txt\'"
+        golden_json = "\'/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions16/13TeV/Legacy_2016/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt\'"
         if 'data' in kind:
             mymodule=importlib.import_module(datasets['data'][year])
             _Samples=mymodule.Samples
